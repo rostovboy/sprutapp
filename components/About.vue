@@ -2,13 +2,13 @@
   <section id="about">
     <b-container class="vert-center">
       <b-row class="align-items-center">
-        <b-col :sm="5" :lg="5">
+        <b-col col-12 :sm="6" :lg="5">
           <div class="matrix">
             <img class="img-fluid matrix-img" src="~/assets/img/door.jpg" alt="">
             <img class="matrix-bg" src="~/assets/img/matrix.svg" alt="">
           </div>
         </b-col>
-        <b-col :sm="7" :lg="7">
+        <b-col col-12 :sm="6" :lg="7">
           <h1 class="mb-5 text-center text-lg-left">
             <span class="sprut-title">SPRUT</span> — система контроля и управления доступом
           </h1>
@@ -35,6 +35,7 @@
   min-height: 100%;
   width: 100%;
 }
+
 
 .sprut-title {
   font-weight: bold;
@@ -70,6 +71,25 @@
   .matrix {
     margin-left: 2.8rem;
     margin-bottom: 5rem;
+  }
+  h1 {
+    margin-top: 3rem;
+    font-size: 2.4rem;
+  }
+}
+@media (min-width: 576px) {
+  h1 {
+    font-size: 2.2rem;
+  }
+}
+@media (min-width: 768px) {
+  h1 {
+    font-size: 2.6rem;
+  }
+}
+@media (min-width: 992px) {
+  h1 {
+    font-size: 3rem;
   }
 }
 </style>
