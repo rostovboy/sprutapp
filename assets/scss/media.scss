@@ -1,0 +1,64 @@
+/*
+    https://getbootstrap.com/docs/4.5/layout/overview/
+
+    xs-sm-md — mobile-view
+
+    сюда попадают телефоны в вертикальной и горизонтальной раскладках
+    и планшеты в горизонтальной
+*/
+
+/* при ширине менее 576px | класс — xs | вертикальная раскладка телефона */
+@media (max-width: 576px) {
+  html{
+    font-size: 13px;
+  }
+  h1 {
+    font-size: 2.4rem;
+  }
+  footer {
+    padding: 2rem 0 1rem 0;
+  }
+}
+
+/* ширина от 576px до 758px | класс — sm | гориз. раскладка телефона и вертик. планшета */
+@media (min-width: 576px) {
+  padding: 2rem 0 1rem 0;
+}
+
+/* ширина от 768px до 992px | класс — md | вертик\гориз. раскладка планшета */
+@media (min-width: 768px) {
+  padding: 2rem 0 1rem 0;
+}
+
+/*
+    дальше уже идет desktop-view
+    в lg могут попадать планшеты в горизонтальной раскладке
+*/
+
+/* ширина от 992px до 1200px | класс — lg */
+@media (min-width: 992px) {
+  .slick-dots {
+    display: none !important;
+  }
+}
+
+/* ширина от 1200px до бесконечности или как в данном случае до 1366 px | класс — xl */
+@media (min-width: 1200px) {
+
+}
+
+/* а для экранов от 1366px (шире большинства ноутов) можно сделать контейнер и пошире чем 1140 */
+@media (min-width: 1366px) {
+  .container {
+    max-width: 1270px;
+  }
+  .modal-xl {
+    max-width: 1300px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .modal-xl {
+    max-width: 1500px;
+  }
+}

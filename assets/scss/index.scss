@@ -1,0 +1,116 @@
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: $base-font-family;
+  background: $bg-gradient;
+}
+
+.wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.vert-center {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+*:focus {
+  outline: none !important;
+}
+
+h1 {
+  font-family: $sprut-font-family;
+  font-size: 3rem;
+  color: $violet-color;
+}
+
+a.self-link, a.pseudo, a.pseudo-link, .pseudo a, {
+  border-bottom: 1px dotted;
+  text-decoration: none !important;
+}
+
+call-button, .call-button-icon {
+  background: linear-gradient(270deg, #2762B9 0%, #3056A3 11.87%, #972EEA 81.77%);
+  border-radius: 4rem;
+  border: 2px solid #fff;
+  font-weight: bold;
+  color: #fff;
+  font-size: 1.1rem;
+  padding: .30rem 2rem .39rem 2rem;
+}
+.call-button.call-mobile {
+  padding: .30rem .6rem;
+}
+
+.call-button:hover {
+  background: #000;
+}
+
+.call-black-button {
+  background-color: #000;
+  padding: .8rem 2rem;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 4rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.call-black-button:hover, .call-black-button:focus {
+  background: $violet-color;
+  box-shadow: none;
+}
+.ask-call input {
+  height: 3.2rem;
+  border-radius: 5rem;
+  border: 1px solid #000;
+}
+.checkout {
+  margin: 1.7rem 0 .5rem 0;
+  padding-left: 1rem;
+}
+
+
+/* Bootstrap Modals */
+.modal-content {
+  padding: 1.5rem .5rem;
+  border-radius: 1rem;
+}
+.modal-header {
+  border-bottom: none;
+  display: block;
+  position: relative;
+  padding: 0 1rem;
+  min-height: 2.5rem;
+}
+.close {
+  position: absolute;
+  top: -.4rem;
+  color: #000;
+  right: 1rem;
+  font-size: 3rem;
+  font-weight: 100;
+}
+.modal-title {
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+
+
+
+
