@@ -23,7 +23,9 @@
           <div class="start-square d-none d-lg-block" v-if="$device.isDesktop">
             Начни с контроллера
           </div>
-          <System/>
+
+          <System v-on:setactive="setActive" />
+
         </div>
         <!--Categories Tabs-->
         <div v-for="category of categories" :key="category.id"
@@ -100,6 +102,12 @@ export default {
     categories() {
       return this.$store.getters['categories/categories']
     }
+  },
+  mounted () {
+    // https://medium.com/@aneesshameed/event-bus-in-nuxt-7728315e81b6
+    this.$nuxt.$on('setactive', (data) => {
+      this.activeItem = data
+    })
   },
   data() {
     return {

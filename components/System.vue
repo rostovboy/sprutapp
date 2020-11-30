@@ -39,7 +39,7 @@
             h2.8V1z M153.8,1H151V0h2.8V1z M148.2,1h-2.8V0h2.8V1z M142.5,1h-2.8V0h2.8V1z M136.9,1h-2.2V0h2.2V1z"/>
       </svg>
     </div>
-    <div @click.prevent="setActive('categoryId-8')" :class="{ active: isActive('categoryId-8') }" title="Источник питания">
+    <div v-on:click="$emit('setactive', 'categoryId-8')" title="Источник питания">
       <div class="system-part ups">
         <svg viewBox="0 0 120 160">
           <g id="bp">
@@ -64,7 +64,7 @@
         </svg>
       </div>
     </div>
-    <div @click.prevent="setActive('categoryId-3')" :class="{ active: isActive('categoryId-3') }" title="Контроллер">
+    <div v-on:click="$emit('setactive', 'categoryId-3')" title="Контроллер">
       <div class="system-part controller">
         <svg viewBox="0 0 90 90">
           <g id="controller">
@@ -104,7 +104,7 @@
         </svg>
       </div>
     </div>
-    <div @click.prevent="setActive('categoryId-4')" :class="{ active: isActive('categoryId-4') }" title="Доводчик">
+    <div v-on:click="$emit('setactive', 'categoryId-4')" title="Доводчик">
       <div class="system-part dovod">
         <svg viewBox="0 0 90 40">
           <g id="dovodchik">
@@ -141,7 +141,7 @@
         </svg>
       </div>
     </div>
-    <div @click.prevent="setActive('categoryId-5')" :class="{ active: isActive('categoryId-5') }" title="Замок">
+    <div v-on:click="$emit('setactive', 'categoryId-5')" title="Замок">
       <div class="system-part lock">
         <svg viewBox="0 0 71 22">
           <path class="st0" d="M70,0H1C0.4,0,0,0.4,0,1V21c0,0.6,0.4,1,1,1h69c0.6,0,1-0.4,1-1V1C71,0.4,70.6,0,70,0z M21.3,6.8h39.6V12H21.3
@@ -150,7 +150,7 @@
         </svg>
       </div>
     </div>
-    <div @click.prevent="setActive('categoryId-7')" :class="{ active: isActive('categoryId-7') }" title="Считыватель">
+    <div v-on:click="$emit('setactive', 'categoryId-7')" title="Считыватель">
       <div class="system-part reader">
         <svg viewBox="0 0 32 48">
           <g id="reader">
@@ -176,7 +176,7 @@
         </svg>
       </div>
     </div>
-    <div @click.prevent="setActive('categoryId-6')" :class="{ active: isActive('categoryId-6') }" title="Кнопка">
+    <div v-on:click="$emit('setactive', 'categoryId-6')" title="Кнопка">
       <div class="system-part key">
         <svg viewBox="0 0 27 27">
           <g id="key">
@@ -201,19 +201,6 @@
 <script>
 export default {
   props: ['activepart'],
-  data () {
-    return {
-      activeItem: 'home',
-    }
-  },
-  methods: {
-    isActive (menuItem) {
-      return this.activeItem === menuItem
-    },
-    setActive (menuItem) {
-      this.activeItem = menuItem
-    }
-  }
 }
 </script>
 

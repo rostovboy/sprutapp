@@ -6,8 +6,8 @@
         Товаров пока нет, но это легко исправить!<br>
         <a href="javascript:"
            class="empty-text-start"
-           @click.prevent="add"
-           @click="$bvModal.hide('Cart'), $bvModal.show('categoryId-3')">
+           @click="$bvModal.hide('Cart')"
+           v-on:click="$nuxt.$emit('setactive', 'categoryId-3')">
           Начни с контроллера
           <font-awesome-icon :icon="['fas', 'arrow-right']"/>
         </a>

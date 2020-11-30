@@ -6,8 +6,7 @@
           {{ product.meta.longtitle }}
           <span title="Заменить модуль"
              class="ml-1 edit-pen"
-             @click.prevent="setActive(`categoryId-${product.meta.parent}`)"
-             :class="{ active: isActive(`categoryId-${product.meta.parent}`) }">
+             v-on:click="$nuxt.$emit('setactive', `categoryId-${product.meta.parent}`)">
             <font-awesome-icon :icon="['fas', 'pen']"/>
           </span>
         </p>
@@ -30,12 +29,6 @@ export default {
   methods: {
     ...mapActions({
     }),
-    isActive(menuItem) {
-      return this.activeItem === menuItem
-    },
-    setActive(menuItem) {
-      this.activeItem = menuItem
-    },
   }
 }
 </script>

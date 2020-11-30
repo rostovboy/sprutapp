@@ -9,8 +9,7 @@
             <span title="Заменить модуль"
                   class="ml-2 edit-pen"
                   @click="$bvModal.hide('Cart')"
-                  @click.prevent="setActive(`categoryId-${product.meta.parent}`)"
-                  :class="{ active: isActive(`categoryId-${product.meta.parent}`) }">
+                  v-on:click="$nuxt.$emit('setactive', `categoryId-${product.meta.parent}`)">
               <font-awesome-icon :icon="['fas', 'pen']"/>
             </span>
           </td>
