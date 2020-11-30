@@ -15,16 +15,71 @@
   footer {
     padding: 2rem 0 1rem 0;
   }
+  .slick-prev {
+    width: 50px !important;
+    left: -5px !important;
+  }
+  .slick-next {
+    width: 50px !important;
+    right: -5px !important;
+  }
+  .slick-prev.slick-disabled {
+    width: 50px !important;
+  }
+  .slick-next.slick-disabled {
+    width: 50px !important;
+  }
+  .configurator-link[data-v-2a183b29] {
+    font-size: 1.3rem;
+  }
 }
 
 /* ширина от 576px до 758px | класс — sm | гориз. раскладка телефона и вертик. планшета */
 @media (min-width: 576px) {
-  padding: 2rem 0 1rem 0;
+  .slick-prev {
+    width: 50px !important;
+    left: -5px !important;
+  }
+  .slick-next {
+    width: 50px !important;
+    right: -5px !important;
+  }
+  .slick-prev.slick-disabled {
+    width: 50px !important;
+  }
+  .slick-next.slick-disabled {
+    width: 50px !important;
+  }
+  .configurator-link[data-v-2a183b29] {
+    font-size: 1.3rem;
+  }
 }
 
 /* ширина от 768px до 992px | класс — md | вертик\гориз. раскладка планшета */
 @media (min-width: 768px) {
-  padding: 2rem 0 1rem 0;
+  .configurator-link {
+    font-size: 1.4rem !important;
+  }
+  .slick-prev {
+    width: 125px !important;
+    height: 50px !important;
+    left: -30px !important;
+  }
+  .slick-prev.slick-disabled {
+    width: 125px !important;
+    height: 50px !important;
+    cursor: unset;
+  }
+  .slick-next {
+    width: 125px !important;
+    height: 50px !important;
+    right: -30px !important;
+  }
+  .slick-next.slick-disabled {
+    width: 125px !important;
+    height: 50px !important;
+    cursor: unset;
+  }
 }
 
 /*
@@ -37,11 +92,16 @@
   .slick-dots {
     display: none !important;
   }
+  .configurator-link {
+    font-size: 1.4rem !important;
+  }
 }
 
 /* ширина от 1200px до бесконечности или как в данном случае до 1366 px | класс — xl */
 @media (min-width: 1200px) {
-
+  .configurator-link {
+    font-size: 1.7rem !important;
+  }
 }
 
 /* а для экранов от 1366px (шире большинства ноутов) можно сделать контейнер и пошире чем 1140 */
@@ -52,10 +112,18 @@
   .modal-xl {
     max-width: 1300px;
   }
+  #configuratorTabs.tab-content {
+    width: 85%;
+    margin: 0 auto;
+  }
 }
 
 @media (min-width: 1600px) {
   .modal-xl {
     max-width: 1500px;
+  }
+  #configuratorTabs.tab-content {
+    width: 85%;
+    margin: 0 auto;
   }
 }

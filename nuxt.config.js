@@ -57,12 +57,12 @@ export default {
       ]
     }
     ],
-    /*['nuxt-vuex-localstorage', {
+    ['nuxt-vuex-localstorage', {
       ...(isDev && {
         mode: 'debug'
       }),
       localStorage: ['cart']
-    }]*/
+    }]
   ],
 
   styleResources: {

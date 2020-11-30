@@ -5,6 +5,9 @@
     </header>
     <Begin />
     <Nuxt />
+    <!--<section id="cart">
+      <div class="container"><Cart /></div>
+    </section>-->
     <About />
     <Contacts />
     <Footer />
@@ -17,8 +20,9 @@ import Begin from '~/components/Begin'
 import About from "../components/About";
 import Contacts from "../components/Contacts";
 import Footer from "../components/Footer";
+import Cart from "../components/Cart";
 export default {
-  components: {Footer, Contacts, About, Navbar, Begin }
+  components: {Cart, Footer, Contacts, About, Navbar, Begin }
 }
 </script>
 

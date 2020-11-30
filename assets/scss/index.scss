@@ -11,6 +11,39 @@ body {
   background: $bg-gradient;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 10px 10px #dadada;
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 0;
+  -webkit-box-shadow: inset 0 0 10px 10px #295eb2;
+}
+
+#cart {
+  position: relative;
+  background-color: #F7F7F7;
+  padding: 6rem 0;
+  display: table;
+  height: 100%;
+  min-height: 100%;
+  width: 100%;
+}
+#Cart .modal-title {
+  background: -webkit-linear-gradient(#2762B9, #972EEA);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: $sprut-font-family;
+  font-size: 2.6rem;
+  font-weight: bold;
+  text-align: left;
+}
+
 .wrapper {
   position: absolute;
   top: 0;
@@ -41,7 +74,7 @@ a.self-link, a.pseudo, a.pseudo-link, .pseudo a, {
   text-decoration: none !important;
 }
 
-call-button, .call-button-icon {
+.call-button, .call-button-icon {
   background: linear-gradient(270deg, #2762B9 0%, #3056A3 11.87%, #972EEA 81.77%);
   border-radius: 4rem;
   border: 2px solid #fff;
@@ -108,6 +141,59 @@ call-button, .call-button-icon {
   font-weight: bold;
   font-size: 1.5rem;
   text-align: center;
+}
+.products-card .card-body {
+  padding: 2rem !important;
+}
+
+a.delete {
+  color: #bbbbbb;
+  font-size: 1.2rem;
+}
+
+a.delete:hover {
+  color: #4e4d4d;
+}
+
+.edit-pen {
+  color: $blue-color;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.edit-pen:hover {
+  color: #0073cf;
+}
+
+/* SLICK */
+.slick-prev, .slick-next {
+  top: 60% !important;
+}
+.slick-prev {
+  left: 0 !important;
+}
+.slick-next {
+  right: 0 !important;
+}
+.slick-slide {
+  padding: 0 1rem !important;
+}
+.slick-prev {
+  background: url('~assets/img/prev_button.svg') no-repeat !important;
+}
+.slick-prev.slick-disabled {
+  background: url('~assets/img/prev_disabled_button.svg') no-repeat !important;
+  cursor: unset;
+}
+.slick-next {
+  background: url('~assets/img/next_button.svg') no-repeat !important;
+}
+.slick-next.slick-disabled {
+  background: url('~assets/img/next_disabled_button.svg') no-repeat !important;
+  cursor: unset;
+}
+.slick-prev::before, .slick-next::before {
+  content: none !important;
 }
 
 
