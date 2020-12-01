@@ -18,15 +18,17 @@
                v-for="product of products.results" :key="product.id"
                :class="{ 'active show': isActive(`productId-${product.id}` )}"
                :id="'productId' + product.id">
+
             <b-row class="align-items-center mb-3">
-              <b-col :lg="5">
-                <img v-if="product.thumb" :src="product.thumb" class="img-fluid" alt="">
-                <img v-else src="~/assets/img/no-image.svg" class="img-fluid" alt="">
+              <b-col :sm="6" :lg="5" class="text-center">
+                <img v-if="product.thumb" :src="product.thumb" class="img-fluid product-thumb" alt="">
+                <img v-else src="~/assets/img/no-image.svg" class="img-fluid product-thumb" alt="">
               </b-col>
-              <b-col :lg="7">
+              <b-col :sm="6" :lg="7">
                 <div v-if="product.props" class="product-props" v-html="product.props"></div>
               </b-col>
             </b-row>
+
             <div v-if="product.feature" class="product-feature" v-html="product.feature"></div>
             <p v-if="product.longtitle" class="product-longtitle" v-html="product.longtitle"></p>
             <p class="product-pagetitle" v-html="product.pagetitle"></p>
@@ -36,9 +38,7 @@
                   {{ product.price | format_price }} <font-awesome-icon :icon="['fas', 'ruble-sign']"/>
                 </div>
               </b-col>
-              <b-col :lg="6">
-
-              </b-col>
+              <b-col :lg="6"></b-col>
             </b-row>
 
             <BuyButton v-if="product.price != '0'" :product="product" />
@@ -148,7 +148,7 @@ export default {
 }
 .product-nav {
   list-style: none;
-  height: 280px;
+  max-height: 280px;
   overflow: auto;
   padding: 0 0 0 .5rem;
 }
@@ -176,7 +176,8 @@ export default {
   background-color: $blue-color;
   border: 2px solid $blue-color;
   border-radius: 50%;
-  display: inline-block; }
+  display: inline-block;
+}
 
 .product-nav-link::before {
   content: "";
@@ -187,5 +188,48 @@ export default {
   width: 1.65rem;
   border: 2px solid #000;
   border-radius: 50%;
-  display: inline-block; }
+  display: inline-block;
+}
+
+@media (max-width: 576px) {
+  .product-thumb {
+    max-height: 200px;
+  }
+  .product-container {
+    height: auto;
+  }
+  .product-nav-link {
+    font-size: 1.1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .product-container {
+    height: auto;
+  }
+  .product-nav-link {
+    font-size: 1.2rem;
+  }
+}
+
+@media (min-width: 1366px) {
+  .product-container {
+    height: 420px;
+  }
+  .product-nav-link {
+    font-size: 1.2rem;
+  }
+}
+
+@media (min-width: 1600px) {
+  .product-nav-link {
+    font-size: 1.3rem;
+  }
+}
+
+@media (min-width: 1800px) {
+  .product-nav-link {
+    font-size: 1.5rem;
+  }
+}
 </style>

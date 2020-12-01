@@ -20,11 +20,26 @@
       <div class="tab-content" id="configuratorTabs">
         <!--Home Tab-->
         <div class="tab-pane fade" :class="{ 'active show': isActive('home') }" id="home">
-          <div class="start-square d-none d-lg-block" v-if="$device.isDesktop">
+
+          <div class="start-square" v-if="$device.isDesktopOrTablet" @click.prevent="setActive('categoryId-3')">
+            Начни с контроллера
+          </div>
+
+          <div class="start-square-mobile" v-if="$device.isMobile" @click.prevent="setActive('categoryId-3')">
             Начни с контроллера
           </div>
 
           <System v-on:setactive="setActive" />
+
+          <!--<div v-if="$device.isDesktop">
+            <p>Is Desktop</p>
+          </div>
+          <div v-if="$device.isMobile">
+            <p>Is Mobile</p>
+          </div>
+          <div v-if="$device.isTablet">
+            <p>Is Tablet</p>
+          </div>-->
 
         </div>
         <!--Categories Tabs-->
@@ -32,22 +47,20 @@
              class="tab-pane fade"
              :class="{ 'active show': isActive(`categoryId-${category.id}`) }"
              :id="'categoryId-' + category.id">
+
           <b-row class="align-items-center">
-            <b-col :lg="4">
-              <div class="position-relative">
+            <b-col col-12 :lg="4">
+              <div v-if="$device.isDesktop" class="position-relative">
                 <img :src="'/images/system/system-' + category.id + '.svg'" class="img-fluid" alt="">
                 <div class="minicart">
                   <MiniCart />
                 </div>
               </div>
             </b-col>
-            <b-col :lg="8">
+            <b-col col-12 :lg="8">
               <b-card class="products-card">
 
-                <button type="button"
-                        class="close close-button"
-                        @click.prevent="setActive('home')"
-                        :class="{ active: isActive('home') }">×</button>
+                <button type="button" class="close close-button" @click.prevent="setActive('home')">×</button>
 
                 <div class="media title-media">
                   <img src="~/assets/img/sprut_violet_logo.svg" class="img-fluid sprut-logo align-self-center mr-3"
@@ -55,12 +68,23 @@
                   <div class="media-body align-self-center category-title">{{ category.pagetitle }}</div>
                 </div>
 
-                <button class="btn to-order-button"
+                <button v-if="$device.isDesktopOrTablet"
+                        class="btn to-order-button"
                         @click.prevent="setActive('home')"
-                        :class="{ active: isActive('home') }"
                         @click="$bvModal.show(`Cart`)">
                   Перейти в состав заказа
                 </button>
+
+                <button v-if="$device.isMobile"
+                        class="btn to-order-button-mobile"
+                        @click.prevent="setActive('home')"
+                        @click="$bvModal.show(`Cart`)">
+                  Перейти в состав заказа
+                </button>
+
+                <div class="minicart-tablet" v-if="$device.isTablet">
+                  <MiniCart />
+                </div>
 
                 <div class="products-block">
                   <Products :category="category.id"/>
@@ -95,9 +119,10 @@ import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
 import System from "../components/System";
 import Products from "../components/Products";
 import MiniCart from "../components/MiniCart";
+import Cart from "../components/Cart";
 
 export default {
-  components: {MiniCart, Products, System, VueSlickCarousel},
+  components: {Cart, MiniCart, Products, System, VueSlickCarousel},
   computed: {
     categories() {
       return this.$store.getters['categories/categories']
@@ -195,7 +220,15 @@ export default {
   width: 42.5%;
 }
 
-.to-order-button {
+.minicart-tablet {
+  position: absolute;
+  top: 50px;
+  left: 53%;
+  background-color: #fff;
+  padding: 0 .5rem;
+  z-index: 1;
+}
+.to-order-button, .to-order-button-mobile {
   position: absolute;
   right: 15%;
   top: 0;
@@ -206,6 +239,14 @@ export default {
   color: #fff;
   text-decoration: none;
 }
+
+.to-order-button-mobile {
+  right: 5%;
+  top: 100%;
+  width: 90%;
+  box-shadow: 0 4px 5px 0 rgba(21, 21, 21, 0.4);
+}
+
 
 .products-card .card-body {
   padding: 2rem !important;
@@ -277,7 +318,8 @@ img.sprut-logo[data-v-2a183b29] {
   padding: 0 7rem;
 }
 
-.start-square {
+.start-square, .start-square-mobile {
+  cursor: pointer;
   position: relative;
   border-radius: .5rem;
   padding: 1rem 2rem;
@@ -292,7 +334,13 @@ img.sprut-logo[data-v-2a183b29] {
   margin-left: 17%;
 }
 
-.start-square::before {
+.start-square-mobile {
+  width: 100%;
+  margin-bottom: 5rem;
+  margin-left: 0;
+}
+
+.start-square::before, .start-square-mobile::before {
   content: "";
   border: solid #fff;
   border-width: 0 3px 3px 0;
@@ -303,9 +351,18 @@ img.sprut-logo[data-v-2a183b29] {
   top: -35px;
   transform: rotate(-135deg);
   -webkit-transform: rotate(-135deg);
+  animation: blinker 2s linear infinite;
 }
 
-.start-square::after {
+@keyframes blinker {
+  50% { opacity: .2; }
+}
+
+.start-square-mobile::before {
+  left: 48%;
+}
+
+.start-square::after, .start-square-mobile::after  {
   content: "";
   border: solid #fff;
   border-width: 0 3px 3px 0;
@@ -316,9 +373,13 @@ img.sprut-logo[data-v-2a183b29] {
   bottom: -35px;
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
+  animation: blinker 2s linear infinite;
+}
+.start-square-mobile::after {
+  right: 56.5%;
 }
 
-.start-square .close {
+.start-square .close, .start-square-mobile .close {
   position: absolute;
   top: -.3rem;;
   right: .5rem;
@@ -334,5 +395,62 @@ img.sprut-logo[data-v-2a183b29] {
 }
 a.to-next-button {
   color: $blue-color;
+}
+
+@media (max-width: 576px) {
+  #configurator {
+    padding-bottom: 75px;
+  }
+  .tab-pane {
+    min-height: auto;
+    max-height: unset;
+  }
+  .products-card {
+    height: auto !important;
+    max-height: unset;
+    min-height: auto;
+  }
+  .products-block {
+    margin-bottom: 4rem;
+  }
+  .products-card .card-body {
+    padding: 1rem !important;
+  }
+  .to-next-button {
+    bottom: 3%;
+    left: 70%;
+  }
+}
+@media (min-width: 768px) {
+  .tab-pane {
+    min-height: auto;
+    max-height: unset;
+  }
+  .products-card {
+    height: auto;
+    max-height: unset;
+    min-height: auto;
+  }
+  .products-block {
+    margin-bottom: 4rem;
+  }
+  .to-next-button {
+    bottom: 4.5%;
+    left: 48%;
+  }
+}
+@media (min-width: 1366px) {
+  .products-card {
+    height: auto;
+    max-height: unset;
+    min-height: auto;
+  }
+  .products-block {
+    margin-bottom: 0;
+  }
+  .to-next-button {
+    bottom: 8%;
+    left: 35%;
+  }
 }
 </style>

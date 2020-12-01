@@ -8,7 +8,7 @@ export default {
   },
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: 'Sprut App',
+    title: 'SPRUT :: Конфигуратор СКУД',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },

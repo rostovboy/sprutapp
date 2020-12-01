@@ -1,31 +1,27 @@
 <template>
   <div v-if="product">
-    <button
-      v-if="!isProductAdded"
-      :class="$style.buy"
-      @click.prevent="buyClickHandler"
-    >
+    <button v-if="!isProductAdded"
+            :class="$style.buy"
+            @click.prevent="buyClickHandler">
       Добавить в заказ
     </button>
-    <a
-      v-else
-      :class="$style.added"
-      href="#"
-      title="Товар в корзине. Удалить?"
-      @click.prevent="addedClickHandler"
-    >
+    <a v-else
+       :class="$style.added"
+       href="#"
+       title="Товар в корзине. Удалить?"
+       @click.prevent="addedClickHandler">
       <span class="added-btn">
         <font-awesome-icon :icon="['fas', 'check']"/>
       </span>
       <span class="remove-btn" style="display: none">
-        <font-awesome-icon  :icon="['fas', 'trash-alt']"/>
+        <font-awesome-icon :icon="['fas', 'trash-alt']"/>
       </span>
     </a>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 
 export default {
   props: {
@@ -38,7 +34,7 @@ export default {
     ...mapGetters({
       getProductsInCart: 'cart/getProductsInCart'
     }),
-    isProductAdded () {
+    isProductAdded() {
       return this.getProductsInCart.find(p => p.productId === this.product.id)
     }
   },
@@ -49,11 +45,11 @@ export default {
       removeProduct: 'cart/removeProduct',
       removeMetaProduct: 'cart/removeMetaProduct',
     }),
-    buyClickHandler () {
+    buyClickHandler() {
       this.addProduct(this.product.id)
       this.addMetaProduct(this.product)
     },
-    addedClickHandler () {
+    addedClickHandler() {
       this.removeProduct(this.product.id)
       this.removeMetaProduct(this.product.id)
     }
@@ -94,6 +90,27 @@ export default {
     background: #000;
     color: #fff;
     box-shadow: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .buy, .added {
+    left: 3%;
+    bottom: -9.5%;
+  }
+}
+
+@media (min-width: 768px) {
+  .buy, .added {
+    left: 0;
+    bottom: -14%;
+  }
+}
+
+@media (min-width: 1366px) {
+  .buy, .added {
+    left: -110%;
+    bottom: 0;
   }
 }
 </style>

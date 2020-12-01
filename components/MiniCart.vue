@@ -2,7 +2,7 @@
   <div>
     <div v-if="getProductsInCart.length === 0"></div>
     <div v-else>
-      <div class="minicart-title">Состав заказа</div>
+      <div class="minicart-title" v-if="!$device.isTablet">Состав заказа</div>
       <MiniProductsList class="products" :products-from-cart="getProductsInCart"/>
     </div>
   </div>
