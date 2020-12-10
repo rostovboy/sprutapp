@@ -128,11 +128,13 @@ export default {
 }
 
 input.qty-input {
-  border-radius: 1.5rem;
-  max-width: 75px;
-  padding-left: 1rem;
-  margin: 0 .4rem;
   border: 1px solid #000;
+  border-radius: 1.5rem;
+  max-width: 55px;
+  max-height: 30px;
+  padding-left: .5rem;
+  margin: 0 .1rem;
+  background: #f7f7f7;
 }
 
 @media (max-width: 576px) {
@@ -155,11 +157,25 @@ input.qty-input {
   .plus-button, .minus-button {
     font-size: 2.2rem;
   }
+  input.qty-input {
+    border-radius: 1.5rem;
+    max-width: 75px;
+    max-height: 35px;
+    padding-left: 1rem;
+    margin: 0 .4rem;
+  }
 }
 
 @media (min-width: 1800px) {
   .plus-button, .minus-button {
     font-size: 2.5rem;
+  }
+  input.qty-input {
+    border-radius: 1.5rem;
+    max-width: 75px;
+    max-height: 35px;
+    padding-left: 1rem;
+    margin: 0 .4rem;
   }
 }
 </style>
