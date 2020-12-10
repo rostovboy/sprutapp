@@ -43,10 +43,8 @@
 import {mapActions} from 'vuex'
 import round from '../mixins/round'
 import debounce from 'lodash.debounce'
-import VueNumericInput from 'vue-numeric-input';
 
 export default {
-  components: {VueNumericInput},
   mixins: [round],
   props: {
     productsFromCart: {
