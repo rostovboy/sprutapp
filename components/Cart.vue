@@ -1,56 +1,66 @@
 <template>
-  <div>
-    <div v-if="getProductsInCart.length === 0">
-      <p class="text-center mb-4"><img class="img-fluid" src="~/assets/img/empty_bag.png" alt=""></p>
-      <p class="empty-text">
-        Товаров пока нет, но это легко исправить!<br>
-        <a href="javascript:"
-           class="empty-text-start"
-           @click="$bvModal.hide('Cart')"
-           v-on:click="$nuxt.$emit('setactive', 'categoryId-3')">
-          Начни с контроллера
-          <font-awesome-icon :icon="['fas', 'arrow-right']"/>
-        </a>
-      </p>
-    </div>
-    <div v-else>
+  <section id="cart">
+    <client-only>
+      <div class="container">
+        <div v-if="getProductsInCart.length === 0" class="container">
+          <p class="text-center mb-4"><img class="img-fluid" src="~/assets/img/empty_bag.png" alt=""></p>
+          <p class="empty-text">
+            В конфигурации еще нет ни одного модуля!<br>
+            <a href="#configurator" @click="goToConfigFromCart($event, 'categoryId-3')">
+              Начни с контроллера
+              <font-awesome-icon :icon="['fas', 'arrow-right']"/>
+            </a>
+          </p>
+        </div>
+        <div v-else>
 
-      <ProductsList class="products" :products-from-cart="getProductsInCart"/>
+          <div class="title-block mb-4">
+            <div class="title">
+              Состав заказа
+            </div>
+          </div>
 
-      <div class="total mb-4">
-        <b-row>
-          <b-col class="text-left pl-4">Итого</b-col>
-          <b-col class="text-right pr-4">{{ getAmount | round | format_price }}
-            <font-awesome-icon :icon="['fas', 'ruble-sign']"/>
-          </b-col>
-        </b-row>
+          <ProductsList class="products" :products-from-cart="getProductsInCart"/>
+
+          <div class="total mt-5 mb-4">
+            <b-row>
+              <b-col class="text-left pl-4">Итого</b-col>
+              <b-col class="text-right total-amount">{{ getAmount | round | format_price }}
+                <font-awesome-icon :icon="['fas', 'ruble-sign']"/>
+              </b-col>
+            </b-row>
+          </div>
+
+          <div class="features">
+            <span class="free-delivery" v-if="getAmount >= 4000">
+              <font-awesome-icon :icon="['fas', 'check']"/> Бесплатная доставка по России
+            </span>
+          </div>
+
+          <hr class="mb-3">
+          <p class="delivery mb-5">
+            Бесплатная доставка по России, до двери вашего дома, при заказе на сумму свыше 4 000 руб.
+            (для Ненецкого АО, Республики Саха (Якутия), Камчатского края, Чукотского АО,
+            Магаданской области, Сахалинской области свыше 30 000 руб.)
+          </p>
+
+          <b-row>
+            <b-col :lg="6" class="text-center">
+              <button class="gradient-button">
+                Получить скидку
+              </button>
+            </b-col>
+            <b-col :lg="6" class="text-center">
+              <button class="black-button mt-4 mt-lg-0" @click="postOrder">
+                Оформить заказ
+              </button>
+            </b-col>
+          </b-row>
+
+        </div>
       </div>
-
-      <span class="free-delivery" v-if="getAmount >= 4000">
-        <font-awesome-icon :icon="['fas', 'check']"/> Бесплатная доставка по России
-      </span>
-      <hr class="mb-3">
-      <p class="delivery mb-5">
-        Бесплатная доставка по России, до двери вашего дома, при заказе на сумму свыше 4 000 руб.
-        (для Ненецкого АО, Республики Саха (Якутия), Камчатского края, Чукотского АО,
-        Магаданской области, Сахалинской области свыше 30 000 руб.)
-      </p>
-
-      <b-row>
-        <b-col :lg="6" class="text-center">
-          <button class="gradient-button">
-            Получить скидку
-          </button>
-        </b-col>
-        <b-col :lg="6" class="text-center">
-          <button class="black-button mt-4 mt-lg-0" @click="postOrder">
-            Оформить заказ
-          </button>
-        </b-col>
-      </b-row>
-
-    </div>
-  </div>
+    </client-only>
+  </section>
 </template>
 
 <script>
@@ -79,9 +89,6 @@ export default {
     }
   },
   methods: {
-    add(event) {
-      this.btnDisabled = true; // mutate data and let vue disable the element
-    },
     postOrder: function () {
       const str = JSON.stringify(this.postBody);
       this.$axios.post('http://unknownsite.ru/api/order', str)
@@ -92,7 +99,15 @@ export default {
           alert(str);
           console.log(error);
         });
-    }
+    },
+    goToConfigFromCart: function (event, category) {
+      event.preventDefault()
+      let link = '#configurator'
+      document.querySelector(link).scrollIntoView({behavior: 'smooth', block: 'start'})
+      // https://medium.com/@aneesshameed/event-bus-in-nuxt-7728315e81b6
+      $nuxt.$emit('setactive', category)
+      $nuxt.$emit('showstartbtn', false)
+    },
   },
   computed: {
     ...mapGetters({
@@ -116,6 +131,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.title-block {
+  border-bottom: 2px solid #000;
+}
+.title {
+  background: -webkit-linear-gradient(#2762B9, #972EEA);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: 'VoxRound', sans-serif;
+  font-size: 2.6rem;
+  font-weight: bold;
+  margin-bottom: -2px;
+  width: fit-content;
+  padding-right: 1rem;
+  border-bottom: 2px solid #f7f7f7;
+  line-height: 2.2rem;
+}
+
+.total-amount {
+  padding-right: 9rem;
+}
+
 .empty-text {
   font-size: 1.3rem;
   font-family: $sprut-font-family;

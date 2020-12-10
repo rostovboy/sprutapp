@@ -1,6 +1,12 @@
 <template>
   <section id="configurator">
-    <b-container>
+    <b-container class="category-menu">
+
+      <div v-if="$device.isDesktop" v-show="isHiddenStartBtn" class="start-arrow">
+        <span class="close" @click.prevent="setActive('categoryId-3')">×</span>
+        <p>Начни с контроллера</p>
+        <img src="~/assets/img/start_controller.svg" alt="">
+      </div>
 
       <VueSlickCarousel v-bind="slickSettingsDesktop" class="category-select">
         <div v-for="category of categories" :key="category.id" class="text-center">
@@ -14,6 +20,12 @@
         </div>
       </VueSlickCarousel>
 
+      <div v-if="$device.isTablet" v-show="isHiddenStartBtn" class="start-arrow-tablet">
+        <span class="close" @click.prevent="setActive('categoryId-3')">×</span>
+        <img src="~/assets/img/start_controller.svg" alt="">
+        <span class="start-text">Начни с контроллера</span>
+      </div>
+
     </b-container>
 
     <div class="container-fluid">
@@ -21,25 +33,15 @@
         <!--Home Tab-->
         <div class="tab-pane fade" :class="{ 'active show': isActive('home') }" id="home">
 
-          <div class="start-square" v-if="$device.isDesktopOrTablet" @click.prevent="setActive('categoryId-3')">
+          <!--<div class="start-square" v-if="$device.isDesktopOrTablet" @click.prevent="setActive('categoryId-3')">
             Начни с контроллера
           </div>
 
           <div class="start-square-mobile" v-if="$device.isMobile" @click.prevent="setActive('categoryId-3')">
             Начни с контроллера
-          </div>
+          </div>-->
 
           <System v-on:setactive="setActive" />
-
-          <!--<div v-if="$device.isDesktop">
-            <p>Is Desktop</p>
-          </div>
-          <div v-if="$device.isMobile">
-            <p>Is Mobile</p>
-          </div>
-          <div v-if="$device.isTablet">
-            <p>Is Tablet</p>
-          </div>-->
 
         </div>
         <!--Categories Tabs-->
@@ -71,14 +73,14 @@
                 <button v-if="$device.isDesktopOrTablet"
                         class="btn to-order-button"
                         @click.prevent="setActive('home')"
-                        @click="$bvModal.show(`Cart`)">
+                        @click="goToCart">
                   Перейти в состав заказа
                 </button>
 
                 <button v-if="$device.isMobile"
                         class="btn to-order-button-mobile"
                         @click.prevent="setActive('home')"
-                        @click="$bvModal.show(`Cart`)">
+                        @click="goToCart">
                   Перейти в состав заказа
                 </button>
 
@@ -133,9 +135,13 @@ export default {
     this.$nuxt.$on('setactive', (data) => {
       this.activeItem = data
     })
+    this.$nuxt.$on('showstartbtn', (data) => {
+      this.isHiddenStartBtn = data
+    })
   },
   data() {
     return {
+      isHiddenStartBtn: true,
       activeItem: 'home',
       slickSettingsDesktop: {
         "dots": false,
@@ -178,10 +184,13 @@ export default {
     },
     setActive(menuItem) {
       this.activeItem = menuItem
+      this.isHiddenStartBtn = false
     },
-    add(event) {
-      this.btnDisabled = true; // mutate data and let vue disable the element
-    },
+    goToCart: function (event) {
+      event.preventDefault()
+      let link = '#cart'
+      document.querySelector(link).scrollIntoView({behavior: 'smooth', block: 'start'})
+    }
   }
 }
 </script>
@@ -190,11 +199,8 @@ export default {
 <style lang="scss" scoped>
 #configurator {
   position: relative;
-  padding-top: 6rem;
+  padding-top: 4.5rem;
   padding-bottom: 35px;
-  background-image: url('~assets/img/sprut_right_bg.svg');
-  background-repeat: no-repeat;
-  background-position: right bottom;
   /*display: table;
   height: 100%;
   min-height: 100%;
@@ -210,13 +216,66 @@ export default {
 .title-media {
 
 }
+.category-menu {
+  position: relative;
+  margin-top: 7.5rem;
+}
+.start-arrow {
+  position: absolute;
+  bottom: 60px;
+  left: 170px;
+  border-radius: .5rem;
+  border: 2px solid #fff;
+  padding: .4rem 1rem .5rem 1rem;
+  width: fit-content;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-family: $sprut-font-family;
+  /*cursor: pointer;*/
+}
+.start-arrow .close, .start-arrow-tablet .close {
+  position: absolute;
+  top: -.3rem;;
+  right: .5rem;
+  color: #fff;
+  font-size: 2.1rem;
+  font-weight: 100;
+  cursor: pointer;
+}
+.start-arrow p {
+  margin-bottom: .1rem;
+}
+
+.start-arrow-tablet {
+  position: relative;
+  border-radius: .5rem;
+  border: 1px solid #fff;
+  padding: .8rem 1rem;
+  width: fit-content;
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 600;
+  font-family: $sprut-font-family;
+  cursor: pointer;
+  margin-left: 19%;
+  margin-top: 1rem;
+}
+
+.start-arrow-tablet img {
+  transform: scaleY(-1);
+}
+.start-arrow-tablet .start-text {
+  position: absolute;
+  left: 100px;
+  top: 22px;
+}
 
 .minicart {
   position: absolute;
   bottom: 1px;
   right: 1.3rem;
   background: white;
-  padding: 0 .5rem;
   width: 42.5%;
 }
 
@@ -247,11 +306,6 @@ export default {
   box-shadow: 0 4px 5px 0 rgba(21, 21, 21, 0.4);
 }
 
-
-.products-card .card-body {
-  padding: 2rem !important;
-}
-
 .products-block {
   margin-top: 2rem;
 }
@@ -268,11 +322,14 @@ img.sprut-logo[data-v-2a183b29] {
 }
 
 .tab-pane {
-  margin-top: 4rem;
+  margin-top: 7rem;
+  margin-bottom: 5rem;
   min-height: 735px;
   max-height: 735px;
 }
-
+#home.tab-pane {
+  margin-bottom: 2.4rem;
+}
 .close-button {
   cursor: pointer;
   position: absolute;
@@ -440,6 +497,11 @@ a.to-next-button {
   }
 }
 @media (min-width: 1366px) {
+  #configurator {
+    background-image: url('~assets/img/sprut_right_bg.svg');
+    background-repeat: no-repeat;
+    background-position: right bottom;
+  }
   .products-card {
     height: auto;
     max-height: unset;
@@ -451,6 +513,21 @@ a.to-next-button {
   .to-next-button {
     bottom: 8%;
     left: 35%;
+  }
+  .products-card .card-body {
+    padding: 2rem 2.5rem 2rem 3rem !important;
+  }
+}
+
+@media (min-width: 1600px) {
+  .products-card .card-body {
+    padding: 2rem 2.5rem 2rem 4rem !important;
+  }
+}
+
+@media (min-width: 1800px) {
+  .products-card .card-body {
+    padding: 2rem 2.5rem 2rem 6rem !important;
   }
 }
 </style>

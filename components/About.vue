@@ -26,6 +26,10 @@
   </section>
 </template>
 
+<script>
+export default {}
+</script>
+
 <style lang="scss" scoped>
 #about {
   background-color: #fff;

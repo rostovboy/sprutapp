@@ -73,7 +73,8 @@ form a {
 }
 
 input {
-  height: 3.2rem;
+  height: 3.8rem;
+  max-width: 405px !important;
   border-radius: 5rem;
   border: 1px solid #000;
 }

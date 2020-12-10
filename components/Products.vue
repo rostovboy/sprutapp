@@ -2,6 +2,7 @@
   <div>
     <b-row>
       <b-col col-12 :lg="6">
+        <p class="choose">Выберите:</p>
         <ul class="product-nav">
           <li v-for="product of products.results" :key="product.id" :title="product.pagetitle">
             <a class="product-nav-link"
@@ -38,10 +39,21 @@
                   {{ product.price | format_price }} <font-awesome-icon :icon="['fas', 'ruble-sign']"/>
                 </div>
               </b-col>
-              <b-col :lg="6"></b-col>
+              <b-col :lg="6">
+                <span class="plus-button" @click.prevent="">+</span>
+                <input
+                  :value="1"
+                  type="number"
+                  :min="1"
+                  :max="1000"
+                  class="qty-input"
+                  @input.prevent=""
+                />
+                <span class="minus-button" @click.prevent="">-</span>
+              </b-col>
             </b-row>
 
-            <BuyButton v-if="product.price != '0'" :product="product" />
+            <BuyButton v-if="product.price != '0'" :product="product" :qty="2" />
 
           </div>
         </div>
@@ -84,6 +96,35 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.plus-button {
+  font-size: 2rem;
+  cursor: pointer;
+  vertical-align: sub;
+}
+
+.minus-button {
+  font-size: 2rem;
+  cursor: pointer;
+  vertical-align: sub;
+}
+
+input.qty-input {
+  border-radius: 1.5rem;
+  padding-left: 1rem;
+  max-width: 50px;
+  border: 1px solid #000;
+}
+
+
+.choose {
+  margin-top: .5rem;
+  margin-bottom: 2rem;
+  color: #000;
+  font-family: $sprut-font-family;
+  font-weight: 400;
+  font-size: 1.7rem;
+}
 .product-container {
   border: 3px solid $blue-color;
   padding: 1rem 2.2rem;
@@ -148,7 +189,7 @@ export default {
 }
 .product-nav {
   list-style: none;
-  max-height: 280px;
+  max-height: 260px;
   overflow: auto;
   padding: 0 0 0 .5rem;
 }
@@ -230,6 +271,9 @@ export default {
 @media (min-width: 1800px) {
   .product-nav-link {
     font-size: 1.5rem;
+  }
+  #productTabs.tab-content {
+    padding-left: 2.5rem;
   }
 }
 </style>

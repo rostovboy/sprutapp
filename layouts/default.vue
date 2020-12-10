@@ -5,9 +5,7 @@
     </header>
     <Begin />
     <Nuxt />
-    <!--<section id="cart">
-      <div class="container"><Cart /></div>
-    </section>-->
+    <Cart />
     <About />
     <Contacts />
     <Footer />

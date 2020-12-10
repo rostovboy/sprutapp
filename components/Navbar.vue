@@ -5,9 +5,12 @@
       <b-navbar-brand href="#begin" @click="goToMain">
         <img class="img-fluid" src="~/assets/img/bastion_logo.svg">
       </b-navbar-brand>
-      <b-navbar-nav v-for="item in items" :key="item.link" class="d-none d-lg-block">
-        <b-nav-item :href="item.link" @click="goToBlock" class="pseudo">{{ item.name }}</b-nav-item>
-      </b-navbar-nav>
+
+      <div class="d-none d-lg-block ml-auto">
+        <b-navbar-nav>
+          <b-nav-item v-for="item in items" :key="item.link" :href="item.link" @click="goToBlock">{{ item.name }}</b-nav-item>
+        </b-navbar-nav>
+      </div>
 
       <button v-b-modal.askCall class="d-none d-lg-block call-button">
         Заказать звонок
@@ -27,6 +30,7 @@
           <b-form-group>
             <b-form-input
               id="input-1"
+              class="m-auto"
               required
               placeholder="Имя"
             ></b-form-input>
@@ -35,6 +39,7 @@
           <b-form-group>
             <b-form-input
               id="input-2"
+              class="m-auto"
               required
               placeholder="Номер телефона"
             ></b-form-input>
@@ -95,7 +100,14 @@ export default {
 a.nav-link {
   color: #fff !important;
   padding: 0.2rem 0 !important;
+  margin-right: 2.5rem;
 }
+
+a.nav-link:hover,
+a:not(.nav-link){
+  text-shadow: 0 0 1.3px white, 0 0 1.3px white, 0 0 1.3px white;
+}
+
 .navbar-dark {
   background-color: black !important;
 }

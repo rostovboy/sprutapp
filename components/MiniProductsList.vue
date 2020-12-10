@@ -5,9 +5,9 @@
         <p class="longtitle">
           {{ product.meta.longtitle }}
           <span title="Заменить модуль"
-             class="ml-1 edit-pen"
+             class="ml-1 edit-pen float-right"
              v-on:click="$nuxt.$emit('setactive', `categoryId-${product.meta.parent}`)">
-            <font-awesome-icon :icon="['fas', 'pen']"/>
+            <img src="~/assets/img/edit_pen.svg" alt="">
           </span>
         </p>
         <p class="pagetitle">{{ product.meta.pagetitle }}</p>
@@ -43,9 +43,9 @@ ul.order-list li {
   border-bottom: 1px solid #ccc;
   padding: .3rem 0;
 }
-.edit-pen {
-  font-size: .8rem;
-  color: $blue-color;
+.edit-pen img {
+  height: 11px;
+  vertical-align: baseline;
   cursor: pointer;
 }
 .longtitle {

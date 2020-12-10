@@ -64,7 +64,7 @@ export default {
   color: #fff;
   font-size: 1.5rem;
   position: absolute;
-  left: -107%;
+  left: -128%;
   bottom: -3%;
   border-radius: 50%;
 
@@ -83,8 +83,6 @@ export default {
   border: 1px solid #000;
   border-radius: 4rem;
   position: absolute;
-  left: -107%;
-  bottom: -3%;
 
   &:hover {
     background: #000;
@@ -109,7 +107,21 @@ export default {
 
 @media (min-width: 1366px) {
   .buy, .added {
-    left: -110%;
+    left: -108%;
+    bottom: 0;
+  }
+}
+
+@media (min-width: 1600px) {
+  .buy, .added {
+    left: -108%;
+    bottom: 0;
+  }
+}
+
+@media (min-width: 1800px) {
+  .buy, .added {
+    left: -128%;
     bottom: 0;
   }
 }
