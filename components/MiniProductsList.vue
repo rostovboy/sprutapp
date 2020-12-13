@@ -40,7 +40,7 @@ ul.order-list {
   margin-bottom: 0;
 }
 ul.order-list li {
-  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
   padding: .3rem 0;
 }
 .edit-pen img {

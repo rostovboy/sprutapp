@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-row>
-      <b-col col-12 :lg="6">
+      <b-col col-12 :xl="6">
         <p class="choose">Выберите:</p>
         <ul class="product-nav">
           <li v-for="product of products.results" :key="product.id" :title="product.pagetitle">
@@ -13,45 +13,89 @@
           </li>
         </ul>
       </b-col>
-      <b-col col-12 :lg="6">
+      <b-col col-12 :xl="6" class="blue-container">
         <div class="tab-content" id="productTabs">
           <div class="tab-pane fade product-container"
                v-for="product of products.results" :key="product.id"
                :class="{ 'active show': isActive(`productId-${product.id}` )}"
                :id="'productId' + product.id">
 
-            <b-row class="align-items-center mb-3">
-              <b-col :sm="6" :lg="5" class="text-center">
-                <img v-if="product.thumb" :src="product.thumb" class="img-fluid product-thumb" alt="">
-                <img v-else src="~/assets/img/no-image.svg" class="img-fluid product-thumb" alt="">
-              </b-col>
-              <b-col :sm="6" :lg="7">
-                <div v-if="product.props" class="product-props" v-html="product.props"></div>
-              </b-col>
-            </b-row>
 
-            <div v-if="product.feature" class="product-feature" v-html="product.feature"></div>
-            <p v-if="product.longtitle" class="product-longtitle" v-html="product.longtitle"></p>
-            <p class="product-pagetitle" v-html="product.pagetitle"></p>
-            <b-row class="align-items-center mt-3" v-if="product.price != '0'">
-              <b-col :lg="6">
-                <div class="price">
-                  {{ product.price | format_price }} <font-awesome-icon :icon="['fas', 'ruble-sign']"/>
-                </div>
-              </b-col>
-              <b-col :lg="6">
-                <span class="plus-button" @click.prevent="">+</span>
-                <input
-                  :value="1"
-                  type="number"
-                  :min="1"
-                  :max="1000"
-                  class="qty-input"
-                  @input.prevent=""
-                />
-                <span class="minus-button" @click.prevent="">-</span>
-              </b-col>
-            </b-row>
+            <div v-if="$device.isTablet">
+              <b-row class="align-items-center">
+                <b-col cols="6">
+                  <b-row class="align-items-center mb-3">
+                    <b-col :sm="6" :xl="5" class="text-center mb-3">
+                      <img v-if="product.thumb" :src="product.thumb" class="img-fluid product-thumb" alt="">
+                      <img v-else src="~/assets/img/no-image.svg" class="img-fluid product-thumb" alt="">
+                    </b-col>
+                    <b-col :sm="6" :xl="7">
+                      <div v-if="product.props" class="product-props" v-html="product.props"></div>
+                    </b-col>
+                  </b-row>
+                </b-col>
+                <b-col cols="6">
+                  <p v-if="product.longtitle" class="product-longtitle" v-html="product.longtitle"></p>
+                  <p class="product-pagetitle" v-html="product.pagetitle"></p>
+                  <b-row class="align-items-center mt-3" v-if="product.price != '0'">
+                    <b-col cols="6" :xl="6">
+                      <div class="price">
+                        {{ product.price | format_price }} <font-awesome-icon :icon="['fas', 'ruble-sign']"/>
+                      </div>
+                    </b-col>
+                    <b-col cols="6" :xl="6">
+                      <span class="plus-button" @click.prevent="">+</span>
+                      <input
+                        :value="1"
+                        type="number"
+                        :min="1"
+                        :max="1000"
+                        class="qty-input"
+                        @input.prevent=""
+                      />
+                      <span class="minus-button" @click.prevent="">-</span>
+                    </b-col>
+                  </b-row>
+                </b-col>
+              </b-row>
+              <div v-if="product.feature" class="product-feature" v-html="product.feature"></div>
+            </div>
+
+
+            <div v-if="!$device.isTablet">
+              <b-row class="align-items-center mb-3">
+                <b-col :sm="6" :xl="5" class="text-center mb-3">
+                  <img v-if="product.thumb" :src="product.thumb" class="img-fluid product-thumb" alt="">
+                  <img v-else src="~/assets/img/no-image.svg" class="img-fluid product-thumb" alt="">
+                </b-col>
+                <b-col :sm="6" :xl="7">
+                  <div v-if="product.props" class="product-props" v-html="product.props"></div>
+                </b-col>
+              </b-row>
+
+              <div v-if="product.feature" class="product-feature" v-html="product.feature"></div>
+              <p v-if="product.longtitle" class="product-longtitle" v-html="product.longtitle"></p>
+              <p class="product-pagetitle" v-html="product.pagetitle"></p>
+              <b-row class="align-items-center mt-3" v-if="product.price != '0'">
+                <b-col cols="6" :lg="6">
+                  <div class="price">
+                    {{ product.price | format_price }} <font-awesome-icon :icon="['fas', 'ruble-sign']"/>
+                  </div>
+                </b-col>
+                <b-col cols="6" :lg="6">
+                  <span class="plus-button" @click.prevent="">+</span>
+                  <input
+                    :value="1"
+                    type="number"
+                    :min="1"
+                    :max="1000"
+                    class="qty-input"
+                    @input.prevent=""
+                  />
+                  <span class="minus-button" @click.prevent="">-</span>
+                </b-col>
+              </b-row>
+            </div>
 
             <BuyButton v-if="product.price != '0'" :product="product" :qty="2" />
 
@@ -116,7 +160,6 @@ input.qty-input {
   border: 1px solid #000;
 }
 
-
 .choose {
   margin-top: .5rem;
   margin-bottom: 2rem;
@@ -152,7 +195,6 @@ input.qty-input {
   background-repeat: no-repeat !important;
 }
 .product-props {
-  font-size: .9rem;
   font-family: $sprut-font-family;
   color: #000;
   font-weight: 100;
@@ -179,12 +221,10 @@ input.qty-input {
 }
 .price {
   font-weight: bold;
-  font-size: 2.2rem;
   font-family: $sprut-font-family;
   color: $violet-color;
 }
 .price svg {
-  font-size: 1.8rem;
   margin-bottom: 2px;
 }
 .product-nav {
@@ -242,6 +282,15 @@ input.qty-input {
   .product-nav-link {
     font-size: 1.1rem;
   }
+  .price {
+    font-size: 1.9rem;
+  }
+  .price svg {
+    font-size: 1.5rem;
+  }
+  .product-props {
+    font-size: .8rem;
+  }
 }
 
 @media (min-width: 768px) {
@@ -250,6 +299,19 @@ input.qty-input {
   }
   .product-nav-link {
     font-size: 1.2rem;
+  }
+  .price {
+    font-size: 1.9rem;
+  }
+  .price svg {
+    font-size: 1.5rem;
+  }
+  .blue-container {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+  .product-props {
+    font-size: .8rem;
   }
 }
 
@@ -260,11 +322,21 @@ input.qty-input {
   .product-nav-link {
     font-size: 1.2rem;
   }
+  .product-props {
+    font-size: .9rem;
+  }
 }
 
 @media (min-width: 1600px) {
   .product-nav-link {
     font-size: 1.3rem;
+  }
+  .price {
+    font-size: 2.2rem;
+  }
+  .price svg {
+    font-size: 1.7rem;
+    margin-bottom: 2px;
   }
 }
 

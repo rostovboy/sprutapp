@@ -1,8 +1,8 @@
 <template>
   <div v-if="productsFromCart.length > 0">
-    <div class="container">
+    <div class="product-row-container">
       <div class="row align-items-center product-row" v-for="product in productsFromCart" :key="product.productId">
-        <div class="col-sm-5">
+        <div class="col-8 col-sm-6">
           {{ product.meta.pagetitle }}
           <a href="#configurator"
              title="Заменить модуль"
@@ -11,10 +11,10 @@
             <img src="~/assets/img/edit_pen.svg" alt="">
           </a>
         </div>
-        <div class="col-sm-2 text-center">
+        <!--<div class="col-sm-2 text-center">
           {{ product.productId.price }}
-        </div>
-        <div class="col-sm-2 text-center">
+        </div>-->
+        <div class="col-sm-3 text-center d-none d-sm-block">
           <span class="plus-button" @click.prevent="onQuantityPlusHandler(product.qty, product)">+</span>
           <input
             :value="product.qty"
@@ -26,10 +26,8 @@
           />
           <span class="minus-button" @click.prevent="onQuantityMinusHandler(product.qty, product)">-</span>
         </div>
-        <div class="col-sm-2 text-center">
+        <div class="col-4 col-sm-3">
           {{ (product.meta.price * product.qty) | round }} <span class="ruble"><font-awesome-icon :icon="['fas', 'ruble-sign']"/></span>
-        </div>
-        <div class="col-sm-1">
           <span class="delete" title="Удалить?" @click.prevent="onRemoveClickHandler(product)">
             <font-awesome-icon :icon="['fas', 'trash-alt']"/>
           </span>
@@ -98,7 +96,6 @@ export default {
 
 <style lang="scss" scoped>
 .product-row {
-  font-size: 1.6rem;
   font-family: $sprut-font-family;
   font-weight: 400;
   padding: 2rem 0 .2rem 0;
@@ -115,13 +112,13 @@ export default {
 .delete {
   color: #AEAEAE;
   font-size: 1rem;
-  vertical-align: middle;
   cursor: pointer;
+  float: right;
+  margin-top: .45rem;
 }
 .edit-pen img {
   height: 1.2rem;
   vertical-align: baseline;
-  margin-left: 1.5rem;
 }
 .plus-button, .minus-button {
   cursor: pointer;
@@ -141,15 +138,49 @@ input.qty-input {
   .plus-button, .minus-button {
     font-size: 1rem;
   }
+  .edit-pen img {
+    height: 1rem;
+    vertical-align: baseline;
+    margin-left: .25rem;
+  }
+  .product-row {
+    font-size: 1.3rem;
+  }
+  .ruble[data-v-9f491c06] {
+    font-size: 1.1rem;
+    margin-left: .1rem;
+  }
+  /*.product-row-container {
+    padding: 0;
+  }*/
 }
 @media (min-width: 768px) {
   .plus-button, .minus-button {
     font-size: 1.5rem;
   }
+  .edit-pen img {
+    height: 1rem;
+    vertical-align: baseline;
+    margin-left: .3rem;
+  }
+  .product-row {
+    font-size: 1.3rem;
+  }
+  .product-row-container {
+    padding: 0 1rem;
+  }
 }
 @media (min-width: 1366px) {
   .plus-button, .minus-button {
     font-size: 2rem;
+  }
+  .edit-pen img {
+    height: 1.2rem;
+    vertical-align: baseline;
+    margin-left: 1.25rem;
+  }
+  .product-row {
+    font-size: 1.6rem;
   }
 }
 

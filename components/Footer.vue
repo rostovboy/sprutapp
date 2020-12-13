@@ -4,10 +4,10 @@
 
       <b-row class="align-items-center">
         <b-col cols="12" :lg="4" class="d-none d-lg-block">
-          <a href="/terms-of-use">Условия использования</a>
+          <span class="span-link" @click="$bvModal.hide('privacyPolicyFooter'), $bvModal.show('Conditions')">Условия использования</span>
         </b-col>
         <b-col cols="12" :lg="5" class="d-none d-lg-block">
-          <a href="/privacy-policy">Политика конфиденциальности</a>
+          <span class="span-link" @click="$bvModal.hide('Conditions'), $bvModal.show('privacyPolicyFooter')">Политика конфиденциальности</span>
         </b-col>
         <b-col cols="12" :lg="3">
           <div class="social-media">
@@ -42,10 +42,10 @@
       <b-row class="align-items-center">
 
         <b-col cols="12" :lg="4" class="text-center d-lg-none mt-5 mb-3">
-          <a href="/terms-of-use">Условия использования</a>
+          <span class="span-link" @click="$bvModal.hide('privacyPolicyFooter'), $bvModal.show('Conditions')">Условия использования</span>
         </b-col>
         <b-col cols="12" :lg="5" class="text-center d-lg-none mb-5">
-          <a href="/privacy-policy">Политика конфиденциальности</a>
+          <span class="span-link" @click="$bvModal.hide('Conditions'), $bvModal.show('privacyPolicyFooter')">Политика конфиденциальности</span>
         </b-col>
 
         <b-col :lg="4">
@@ -76,14 +76,40 @@
       </b-row>
 
     </b-container>
+
+    <b-modal id="privacyPolicyFooter" scrollable large size="lg" centered title="Политика конфиденциальности" hide-footer>
+      <Policy />
+    </b-modal>
+
+    <b-modal id="Conditions" scrollable large size="lg" centered title="Условия использования" hide-footer>
+      <Conditions />
+    </b-modal>
+
   </footer>
 </template>
+
+<script>
+import Policy from "./Policy";
+import Conditions from "./Conditions";
+export default {
+  components: {Conditions, Policy}
+}
+</script>
 
 <style lang="scss" scoped>
 footer {
   color: #fff;
   background-color: #000;
   padding: 7rem 0 6rem 0;
+}
+
+.span-link {
+  cursor: pointer;
+  color: #fff;
+  text-decoration: underline;
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 footer hr {

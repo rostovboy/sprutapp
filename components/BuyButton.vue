@@ -99,13 +99,29 @@ export default {
 }
 
 @media (min-width: 768px) {
+  .buy {
+    padding: .3rem .7rem;
+  }
   .buy, .added {
-    left: 0;
-    bottom: -14%;
+    left: 52%;
+    bottom: 8%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .buy {
+    padding: .3rem .7rem;
+  }
+  .buy, .added {
+    left: 52%;
+    bottom: 8%;
   }
 }
 
 @media (min-width: 1366px) {
+  .buy {
+    padding: .5rem 2rem;
+  }
   .buy, .added {
     left: -108%;
     bottom: 0;

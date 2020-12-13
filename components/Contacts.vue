@@ -30,7 +30,9 @@
 
               <b-form-group class="checkout">
                 <b-form-checkbox-group>
-                  <b-form-checkbox required>Согласие на обработку <a href="/privacy-policy">персональных данных</a>
+                  <b-form-checkbox required>
+                    Согласие на обработку
+                    <span class="span-link" @click="$bvModal.show('privacyPolicyContacts')">персональных данных</span>
                   </b-form-checkbox>
                 </b-form-checkbox-group>
               </b-form-group>
@@ -43,6 +45,11 @@
         </b-col>
       </b-row>
     </b-container>
+
+    <b-modal id="privacyPolicyContacts" scrollable large size="lg" centered title="Политика конфиденциальности" hide-footer>
+      <Policy />
+    </b-modal>
+
   </section>
 </template>
 
@@ -54,6 +61,12 @@
 }
 
 form a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.span-link {
+  cursor: pointer;
   color: #fff;
   text-decoration: underline;
 }
@@ -108,3 +121,9 @@ input {
   }
 }
 </style>
+<script>
+import Policy from "./Policy";
+export default {
+  components: {Policy}
+}
+</script>

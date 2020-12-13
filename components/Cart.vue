@@ -22,40 +22,82 @@
 
           <ProductsList class="products" :products-from-cart="getProductsInCart"/>
 
-          <div class="total mt-5 mb-4">
-            <b-row>
-              <b-col class="text-left pl-4">Итого</b-col>
-              <b-col class="text-right total-amount">{{ getAmount | round | format_price }}
-                <font-awesome-icon :icon="['fas', 'ruble-sign']"/>
-              </b-col>
-            </b-row>
-          </div>
+          <div class="total-container">
+            <div class="total mt-5 mb-4">
+              <b-row>
+                <b-col class="text-left itogo">Итого</b-col>
+                <b-col class="text-right total-amount">{{ getAmount | round | format_price }}
+                  <font-awesome-icon :icon="['fas', 'ruble-sign']"/>
+                </b-col>
+              </b-row>
+            </div>
 
-          <div class="features">
+            <div class="features">
             <span class="free-delivery" v-if="getAmount >= 4000">
               <font-awesome-icon :icon="['fas', 'check']"/> Бесплатная доставка по России
             </span>
+            </div>
+
+            <hr class="mb-3 cart-hr">
+            <p class="delivery mb-5">
+              Бесплатная доставка по России, до двери вашего дома, при заказе на сумму свыше 4&nbsp;000 руб.
+              (для Ненецкого АО, Республики Саха (Якутия), Камчатского края, Чукотского АО,
+              Магаданской области, Сахалинской области свыше 30&nbsp;000 руб.)
+            </p>
           </div>
 
-          <hr class="mb-3">
-          <p class="delivery mb-5">
-            Бесплатная доставка по России, до двери вашего дома, при заказе на сумму свыше 4 000 руб.
-            (для Ненецкого АО, Республики Саха (Якутия), Камчатского края, Чукотского АО,
-            Магаданской области, Сахалинской области свыше 30 000 руб.)
-          </p>
-
-          <b-row>
+          <b-row class="align-items-center">
             <b-col :lg="6" class="text-center">
-              <button class="gradient-button">
+              <button v-b-modal.askDiscount class="gradient-button">
                 Получить скидку
               </button>
             </b-col>
             <b-col :lg="6" class="text-center">
-              <button class="black-button mt-4 mt-lg-0" @click="postOrder">
+              <a :href="url+get_str" target="_blank" class="btn black-button mt-4 mt-lg-0">
                 Оформить заказ
-              </button>
+              </a>
             </b-col>
           </b-row>
+
+          <b-modal id="askDiscount" centered title="Получить скидку" hide-footer>
+            <p class="text-center">
+              Для получения дополнительной скидки<br>
+              оставьте свои контакты и менеджер свяжется с вами
+            </p>
+            <div class="text-center">
+              <b-form class="ask-call">
+                <b-form-group>
+                  <b-form-input
+                    id="input-discount-name"
+                    class="m-auto"
+                    required
+                    placeholder="Имя"
+                  ></b-form-input>
+                </b-form-group>
+
+                <b-form-group>
+                  <b-form-input
+                    id="input-discount-phone"
+                    class="m-auto"
+                    required
+                    placeholder="Номер телефона"
+                  ></b-form-input>
+                </b-form-group>
+                <b-form-group class="checkout">
+                  <b-form-checkbox-group>
+                    <b-form-checkbox required>
+                      Согласие на обработку <span class="span-link" @click="$bvModal.hide('askDiscount'), $bvModal.show('privacyPolicyCart')">персональных данных</span>
+                    </b-form-checkbox>
+                  </b-form-checkbox-group>
+                </b-form-group>
+                <button type="submit" class="call-black-button mt-4">Заказать звонок</button>
+              </b-form>
+            </div>
+          </b-modal>
+
+          <b-modal id="privacyPolicyCart" scrollable large size="lg" centered title="Политика конфиденциальности" hide-footer>
+            <Policy />
+          </b-modal>
 
         </div>
       </div>
@@ -68,14 +110,21 @@ import {mapGetters} from 'vuex'
 import round from '../mixins/round'
 import format_price from "../mixins/format_price"
 import ProductsList from '../components/ProductsList.vue'
+import Policy from "./Policy";
 
 export default {
   components: {
+    Policy,
     ProductsList
   },
   mixins: [round, format_price],
   data() {
     return {
+      url: 'https://dev.skat-ups.ru/addtobasket/',
+      get_str: '&product_id[]=555',
+      getBody: [
+        '&product_id[]=555'
+      ],
       postBody: [
         {
           products: [
@@ -91,7 +140,18 @@ export default {
   methods: {
     postOrder: function () {
       const str = JSON.stringify(this.postBody);
-      this.$axios.post('http://unknownsite.ru/api/order', str)
+      this.$axios.post('https://dev.skat-ups.ru/addtobasket/', str)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          alert(str);
+          console.log(error);
+        });
+    },
+    getOrder: function () {
+      const str = this.getBody
+      this.$axios.get('https://dev.skat-ups.ru/addtobasket/', str)
         .then((response) => {
           console.log(response);
         })
@@ -131,8 +191,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.cart-hr {
+  border-bottom: 2px solid #000;
+}
 .title-block {
   border-bottom: 2px solid #000;
+}
+.span-link {
+  cursor: pointer;
+  color: #2C60B9;
+  text-decoration: underline;
 }
 .title {
   background: -webkit-linear-gradient(#2762B9, #972EEA);
@@ -146,10 +214,6 @@ export default {
   padding-right: 1rem;
   border-bottom: 2px solid #f7f7f7;
   line-height: 2.2rem;
-}
-
-.total-amount {
-  padding-right: 9rem;
 }
 
 .empty-text {
@@ -247,6 +311,9 @@ table {
   table {
     font-size: 1rem;
   }
+  .total-container {
+    padding: 0 1rem;
+  }
 }
 
 @media (min-width: 768px) {
@@ -258,6 +325,15 @@ table {
 @media (min-width: 992px) {
   table {
     font-size: 1.3rem;
+  }
+  .itogo, .features {
+    margin-left: 1rem;
+  }
+  .total-container {
+    padding: 0;
+  }
+  .total-amount {
+    padding-right: 9rem;
   }
 }
 </style>

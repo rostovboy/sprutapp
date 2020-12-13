@@ -46,7 +46,9 @@
           </b-form-group>
           <b-form-group class="checkout">
             <b-form-checkbox-group>
-              <b-form-checkbox required>Согласие на обработку <a href="/privacy-policy">персональных данных</a></b-form-checkbox>
+              <b-form-checkbox required>
+                Согласие на обработку <span class="span-link" @click="$bvModal.hide('askCall'), $bvModal.show('privacyPolicy')">персональных данных</span>
+              </b-form-checkbox>
             </b-form-checkbox-group>
           </b-form-group>
           <button type="submit" class="call-black-button mt-4">Заказать звонок</button>
@@ -54,11 +56,20 @@
       </div>
     </b-modal>
 
+
+
+    <b-modal id="privacyPolicy" scrollable large size="lg" centered title="Политика конфиденциальности" hide-footer>
+      <Policy />
+    </b-modal>
+
+
   </b-navbar>
 </template>
 
 <script>
+import Policy from "./Policy";
 export default {
+  components: {Policy},
   data() {
     return {
       items: [
@@ -125,6 +136,12 @@ a:not(.nav-link){
 }
 .call-button:hover {
   background: #000;
+}
+
+.span-link {
+  cursor: pointer;
+  color: #2C60B9;
+  text-decoration: underline;
 }
 
 .top-nav {

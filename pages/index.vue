@@ -51,15 +51,15 @@
              :id="'categoryId-' + category.id">
 
           <b-row class="align-items-center">
-            <b-col col-12 :lg="4">
-              <div v-if="$device.isDesktop" class="position-relative">
+            <b-col v-if="$device.isDesktop" :xl="4">
+              <div class="position-relative">
                 <img :src="'/images/system/system-' + category.id + '.svg'" class="img-fluid" alt="">
                 <div class="minicart">
                   <MiniCart />
                 </div>
               </div>
             </b-col>
-            <b-col col-12 :lg="8">
+            <b-col col-12 :sm="12" :xl="8">
               <b-card class="products-card">
 
                 <button type="button" class="close close-button" @click.prevent="setActive('home')">×</button>
@@ -70,22 +70,29 @@
                   <div class="media-body align-self-center category-title">{{ category.pagetitle }}</div>
                 </div>
 
-                <button v-if="$device.isDesktopOrTablet"
-                        class="btn to-order-button"
-                        @click.prevent="setActive('home')"
-                        @click="goToCart">
-                  Перейти в состав заказа
-                </button>
-
                 <button v-if="$device.isMobile"
                         class="btn to-order-button-mobile"
                         @click.prevent="setActive('home')"
+                        @click="goToCartMobile">
+                  Перейти в состав заказа
+                </button>
+
+                <button v-if="$device.isDesktop"
+                        class="btn to-order-button-desktop"
+                        @click.prevent="setActive('home')"
                         @click="goToCart">
                   Перейти в состав заказа
                 </button>
 
-                <div class="minicart-tablet" v-if="$device.isTablet">
-                  <MiniCart />
+                <div v-if="$device.isTablet" class="tablet-minicart-block">
+                  <button class="btn to-order-button"
+                          @click.prevent="setActive('home')"
+                          @click="goToCart">
+                    Перейти в состав заказа
+                  </button>
+                  <div class="minicart-tablet">
+                    <MiniCart />
+                  </div>
                 </div>
 
                 <div class="products-block">
@@ -156,7 +163,6 @@ export default {
             "settings": {
               "slidesToShow": 3,
               "slidesToScroll": 1,
-              "infinite": true,
             }
           },
           {
@@ -190,6 +196,11 @@ export default {
       event.preventDefault()
       let link = '#cart'
       document.querySelector(link).scrollIntoView({behavior: 'smooth', block: 'start'})
+    },
+    goToCartMobile: function (event) {
+      event.preventDefault()
+      let link = '#configurator'
+      document.querySelector(link).scrollIntoView({behavior: 'smooth', block: 'nearest'})
     }
   }
 }
@@ -280,26 +291,39 @@ export default {
 }
 
 .minicart-tablet {
-  position: absolute;
-  top: 50px;
-  left: 53%;
   background-color: #fff;
-  padding: 0 .5rem;
-  z-index: 1;
+  padding: 0;
 }
-.to-order-button, .to-order-button-mobile {
+
+.tablet-minicart-block {
   position: absolute;
   right: 15%;
   top: 0;
-  padding: .7rem 1.6rem;
-  height: 50px;
+  z-index: 1;
+  box-shadow: 1px 8px 14px 0 rgba(21, 21, 21, 0.26);
+}
+.to-order-button, .to-order-button-desktop {
   background: $violet-color;
   border-radius: 0 0 10px 10px;
   color: #fff;
   text-decoration: none;
 }
 
+.to-order-button-desktop {
+  position: absolute;
+  top: 0;
+  right: 15%;
+  padding: .7rem 1.6rem;
+  height: 50px;
+}
+
 .to-order-button-mobile {
+  position: absolute;
+  padding: .3rem;
+  background: $violet-color;
+  border-radius: 0 0 10px 10px;
+  color: #fff;
+  text-decoration: none;
   right: 5%;
   top: 100%;
   width: 90%;
@@ -474,8 +498,8 @@ a.to-next-button {
     padding: 1rem !important;
   }
   .to-next-button {
-    bottom: 3%;
-    left: 70%;
+    bottom: 2.3%;
+    left: 71%;
   }
 }
 @media (min-width: 768px) {
@@ -492,8 +516,23 @@ a.to-next-button {
     margin-bottom: 4rem;
   }
   .to-next-button {
-    bottom: 4.5%;
-    left: 48%;
+    bottom: 8%;
+    left: 80%;
+  }
+  .products-card .card-body {
+    padding: 1.2rem !important;
+  }
+  .products-block {
+    margin-bottom: 0;
+  }
+  .to-order-button {
+    padding: .2rem 1.6rem;
+  }
+}
+@media (min-width: 1024px) {
+  .to-next-button {
+    bottom: 8%;
+    left: 72%;
   }
 }
 @media (min-width: 1366px) {
@@ -511,11 +550,15 @@ a.to-next-button {
     margin-bottom: 0;
   }
   .to-next-button {
-    bottom: 8%;
-    left: 35%;
+    bottom: 7%;
+    left: 37%;
   }
   .products-card .card-body {
-    padding: 2rem 2.5rem 2rem 3rem !important;
+    padding: 1.6rem !important;
+  }
+  .to-order-button {
+    padding: .7rem 1.6rem;
+    height: 50px;
   }
 }
 
