@@ -9,7 +9,6 @@ export const state = () => ({
   products: [],
   metaProducts: [],
   version: '0.0.1'
-
 })
 
 export const getters = {
@@ -54,6 +53,11 @@ export const actions = {
   async addProduct ({ commit }, data) {
     await sleep(300)
     await commit('ADD_PRODUCT', data)
+  },
+  async addQuantity ({ commit }, data) {
+    await sleep(350)
+    console.log(data)
+    await commit('SET_PRODUCT_QTY', data)
   },
   async addMetaProduct ({ commit }, data) {
     await sleep(300)

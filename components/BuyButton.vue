@@ -28,6 +28,10 @@ export default {
     product: {
       type: Object,
       required: true
+    },
+    qty: {
+      type: Number,
+      required: true
     }
   },
   computed: {
@@ -41,6 +45,7 @@ export default {
   methods: {
     ...mapActions({
       addProduct: 'cart/addProduct',
+      addQuantity: 'cart/addQuantity',
       addMetaProduct: 'cart/addMetaProduct',
       removeProduct: 'cart/removeProduct',
       removeMetaProduct: 'cart/removeMetaProduct',
@@ -48,6 +53,7 @@ export default {
     buyClickHandler() {
       this.addProduct(this.product.id)
       this.addMetaProduct(this.product)
+      this.addQuantity({'productId': this.product.id, 'qty': this.qty})
     },
     addedClickHandler() {
       this.removeProduct(this.product.id)

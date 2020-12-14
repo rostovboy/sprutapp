@@ -229,7 +229,6 @@ export default {
 }
 .category-menu {
   position: relative;
-  margin-top: 7.5rem;
 }
 .start-arrow {
   position: absolute;
@@ -501,6 +500,9 @@ a.to-next-button {
     bottom: 2.3%;
     left: 71%;
   }
+  .category-menu {
+    margin-top: 4rem;
+  }
 }
 @media (min-width: 768px) {
   .tab-pane {
@@ -527,6 +529,9 @@ a.to-next-button {
   }
   .to-order-button {
     padding: .2rem 1.6rem;
+  }
+  .category-menu {
+    margin-top: 4rem;
   }
 }
 @media (min-width: 1024px) {
@@ -559,6 +564,9 @@ a.to-next-button {
   .to-order-button {
     padding: .7rem 1.6rem;
     height: 50px;
+  }
+  .category-menu {
+    margin-top: 7.5rem;
   }
 }
 

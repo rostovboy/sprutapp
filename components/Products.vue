@@ -44,7 +44,7 @@
                       </div>
                     </b-col>
                     <b-col cols="6" :xl="6">
-                      <span class="plus-button" @click.prevent="">+</span>
+                      <!--<span class="plus-button" @click.prevent="">+</span>
                       <input
                         :value="1"
                         type="number"
@@ -53,7 +53,7 @@
                         class="qty-input"
                         @input.prevent=""
                       />
-                      <span class="minus-button" @click.prevent="">-</span>
+                      <span class="minus-button" @click.prevent="">-</span>-->
                     </b-col>
                   </b-row>
                 </b-col>
@@ -83,21 +83,20 @@
                   </div>
                 </b-col>
                 <b-col cols="6" :lg="6">
-                  <span class="plus-button" @click.prevent="">+</span>
+                  <span class="plus-button" @click.prevent="onQuantityPlusHandler()">+</span>
                   <input
-                    :value="1"
+                    :value="qty"
                     type="number"
                     :min="1"
                     :max="1000"
                     class="qty-input"
-                    @input.prevent=""
                   />
-                  <span class="minus-button" @click.prevent="">-</span>
+                  <span class="minus-button" @click.prevent="onQuantityMinusHandler()">-</span>
                 </b-col>
               </b-row>
             </div>
 
-            <BuyButton v-if="product.price != '0'" :product="product" :qty="2" />
+            <BuyButton v-if="product.price != '0'" :product="product" :qty="qty" />
 
           </div>
         </div>
@@ -110,6 +109,7 @@
 import BuyButton from "../components/BuyButton"
 import round from "../mixins/round"
 import format_price from "../mixins/format_price"
+import debounce from "lodash.debounce";
 export default {
   components: {
     BuyButton
@@ -120,7 +120,8 @@ export default {
     return {
       activeItem: null,
       selected: null,
-      products: []
+      products: [],
+      qty: 1
     }
   },
   async fetch() {
@@ -134,7 +135,19 @@ export default {
     },
     setActive (menuItem) {
       this.activeItem = menuItem
-    }
+    },
+    onQuantityPlusHandler () {
+      this.qty++
+      console.log(this.qty)
+    },
+    onQuantityMinusHandler () {
+      if (this.qty === 1) {
+        //alert("Маловато будет");
+      } else {
+        this.qty--;
+      }
+      console.log(this.qty)
+    },
   }
 }
 </script>

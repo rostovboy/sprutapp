@@ -122,7 +122,8 @@ export default {
     return {
       url: 'https://dev.skat-ups.ru/addtobasket/',
       get_str: '&product_id[]=555',
-      getBody: [
+      complect: false,
+      /*getBody: [
         '&product_id[]=555'
       ],
       postBody: [
@@ -133,12 +134,12 @@ export default {
           ],
           complect: 1
         }
-      ],
+      ],*/
       errors: [] // массив для записи ошибок
     }
   },
   methods: {
-    postOrder: function () {
+    /*postOrder: function () {
       const str = JSON.stringify(this.postBody);
       this.$axios.post('https://dev.skat-ups.ru/addtobasket/', str)
         .then((response) => {
@@ -159,7 +160,7 @@ export default {
           alert(str);
           console.log(error);
         });
-    },
+    },*/
     goToConfigFromCart: function (event, category) {
       event.preventDefault()
       let link = '#configurator'
