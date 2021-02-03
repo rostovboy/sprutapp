@@ -24,12 +24,28 @@
 
           <div class="total-container">
             <div class="total mt-5 mb-4">
-              <b-row>
+              <!--<b-row>
                 <b-col class="text-left itogo">Итого</b-col>
                 <b-col class="text-right total-amount">{{ getAmount | round | format_price }}
                   <font-awesome-icon :icon="['fas', 'ruble-sign']"/>
                 </b-col>
-              </b-row>
+              </b-row>-->
+
+
+              <div class="row align-items-center">
+                <div class="col-7 col-sm-7 itogo">
+                  Итого
+                </div>
+                <div class="col-sm-1 text-center d-none d-sm-block">
+                </div>
+                <div class="col-4 col-sm-3 total-amount text-right">
+                  {{ getAmount | round | format_price }}
+                  <font-awesome-icon :icon="['fas', 'ruble-sign']"/>
+                </div>
+                <div class="col-1 col-sm-1"></div>
+              </div>
+
+
             </div>
 
             <div class="features">
@@ -212,7 +228,7 @@ export default {
   font-weight: bold;
   margin-bottom: -2px;
   width: fit-content;
-  padding-right: 1rem;
+  padding: 0 1rem;
   border-bottom: 2px solid #f7f7f7;
   line-height: 2.2rem;
 }
@@ -327,14 +343,17 @@ table {
   table {
     font-size: 1.3rem;
   }
-  .itogo, .features {
+  .features {
     margin-left: 1rem;
+  }
+  .itogo {
+    padding-left: 2rem;
   }
   .total-container {
     padding: 0;
   }
   .total-amount {
-    padding-right: 9rem;
+    padding-right: 1.4rem;
   }
 }
 </style>

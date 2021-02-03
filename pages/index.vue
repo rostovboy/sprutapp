@@ -52,7 +52,7 @@
 
           <b-row class="align-items-center">
             <b-col v-if="$device.isDesktop" :xl="4">
-              <div class="position-relative">
+              <div class="position-relative door-block">
                 <img :src="'/images/system/system-' + category.id + '.svg'" class="img-fluid" alt="">
                 <div class="minicart">
                   <MiniCart />
@@ -211,7 +211,7 @@ export default {
 #configurator {
   position: relative;
   padding-top: 4.5rem;
-  padding-bottom: 35px;
+  /*padding-bottom: 35px;*/
   /*display: table;
   height: 100%;
   min-height: 100%;
@@ -287,6 +287,7 @@ export default {
   right: 1.3rem;
   background: white;
   width: 42.5%;
+  margin-bottom: -3.4rem;
 }
 
 .minicart-tablet {
@@ -345,13 +346,13 @@ img.sprut-logo[data-v-2a183b29] {
 }
 
 .tab-pane {
-  margin-top: 7rem;
-  margin-bottom: 5rem;
+  margin-top: 7.5rem;
+  /*margin-bottom: 5rem;*/
   min-height: 735px;
   max-height: 735px;
 }
 #home.tab-pane {
-  margin-bottom: 2.4rem;
+  margin-bottom: .45rem;
 }
 .close-button {
   cursor: pointer;
@@ -571,6 +572,12 @@ a.to-next-button {
 }
 
 @media (min-width: 1600px) {
+  .products-card {
+    margin-bottom: 3rem;
+  }
+  .door-block img{
+    margin-bottom: -3.5rem;
+  }
   .products-card .card-body {
     padding: 2rem 2.5rem 2rem 4rem !important;
   }

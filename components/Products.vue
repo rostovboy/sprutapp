@@ -74,26 +74,50 @@
               </b-row>
 
               <div v-if="product.feature" class="product-feature" v-html="product.feature"></div>
-              <p v-if="product.longtitle" class="product-longtitle" v-html="product.longtitle"></p>
-              <p class="product-pagetitle" v-html="product.pagetitle"></p>
-              <b-row class="align-items-center mt-3" v-if="product.price != '0'">
-                <b-col cols="6" :lg="6">
-                  <div class="price">
-                    {{ product.price | format_price }} <font-awesome-icon :icon="['fas', 'ruble-sign']"/>
-                  </div>
-                </b-col>
-                <b-col cols="6" :lg="6">
-                  <span class="plus-button" @click.prevent="onQuantityPlusHandler()">+</span>
-                  <input
-                    :value="qty"
-                    type="number"
-                    :min="1"
-                    :max="1000"
-                    class="qty-input"
-                  />
-                  <span class="minus-button" @click.prevent="onQuantityMinusHandler()">-</span>
-                </b-col>
-              </b-row>
+              <p v-if="product.longtitle" class="product-longtitle ml-2" v-html="product.longtitle"></p>
+              <p class="product-pagetitle ml-2" v-html="product.pagetitle"></p>
+
+              <div v-if="!$device.isMobile" class="mt-3 price-block">
+                <b-row class="align-items-center" v-if="product.price != '0'">
+                  <b-col cols="6" :lg="6">
+                    <div class="price">
+                      {{ product.price | format_price }} <font-awesome-icon :icon="['fas', 'ruble-sign']"/>
+                    </div>
+                  </b-col>
+                  <b-col cols="6" :lg="6">
+                    <span class="plus-button" @click.prevent="onQuantityPlusHandler()">+</span>
+                    <input
+                      :value="qty"
+                      type="number"
+                      :min="1"
+                      :max="1000"
+                      class="qty-input"
+                    />
+                    <span class="minus-button" @click.prevent="onQuantityMinusHandler()">-</span>
+                  </b-col>
+                </b-row>
+              </div>
+
+              <div v-if="$device.isMobile" class="mt-3 ml-2">
+                <b-row class="align-items-center" v-if="product.price != '0'">
+                  <b-col cols="6" :lg="6">
+                    <div class="price">
+                      {{ product.price | format_price }} <font-awesome-icon :icon="['fas', 'ruble-sign']"/>
+                    </div>
+                  </b-col>
+                  <b-col cols="6" :lg="6">
+                    <span class="plus-button" @click.prevent="onQuantityPlusHandler()">+</span>
+                    <input
+                      :value="qty"
+                      type="number"
+                      :min="1"
+                      :max="1000"
+                      class="qty-input"
+                    />
+                    <span class="minus-button" @click.prevent="onQuantityMinusHandler()">-</span>
+                  </b-col>
+                </b-row>
+              </div>
             </div>
 
             <BuyButton v-if="product.price != '0'" :product="product" :qty="qty" />
@@ -180,6 +204,13 @@ input.qty-input {
   font-family: $sprut-font-family;
   font-weight: 400;
   font-size: 1.7rem;
+}
+
+.price-block {
+  position: absolute;
+  width: 100%;
+  bottom: 1rem;
+  margin-left: .5rem;
 }
 .product-container {
   border: 3px solid $blue-color;

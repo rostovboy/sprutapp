@@ -26,12 +26,23 @@
           />
           <span class="minus-button" @click.prevent="onQuantityMinusHandler(product.qty, product)">-</span>
         </div>
-        <div class="col-4 col-sm-3">
-          {{ (product.meta.price * product.qty) | round }} <span class="ruble"><font-awesome-icon :icon="['fas', 'ruble-sign']"/></span>
-          <span class="delete" title="Удалить?" @click.prevent="onRemoveClickHandler(product)">
-            <font-awesome-icon :icon="['fas', 'trash-alt']"/>
-          </span>
-        </div>
+          <div v-if="$device.isMobile" class="col-4 col-sm-3">
+            {{ (product.meta.price * product.qty) | round }} <span class="ruble"><font-awesome-icon :icon="['fas', 'ruble-sign']"/></span>
+            <span class="delete" title="Удалить?" @click.prevent="onRemoveClickHandler(product)">
+              <font-awesome-icon :icon="['fas', 'trash-alt']"/>
+            </span>
+          </div>
+
+
+          <div v-if="$device.isDesktopOrTablet" class="col-2 col-sm-2 text-right">
+            {{ (product.meta.price * product.qty) | round }} <span class="ruble"><font-awesome-icon :icon="['fas', 'ruble-sign']"/></span>
+          </div>
+          <div v-if="$device.isDesktopOrTablet" class="col-1 col-sm-1">
+            <span class="delete" title="Удалить?" @click.prevent="onRemoveClickHandler(product)">
+              <font-awesome-icon :icon="['fas', 'trash-alt']"/>
+            </span>
+          </div>
+
       </div>
     </div>
   </div>
