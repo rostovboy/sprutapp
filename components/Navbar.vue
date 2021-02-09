@@ -12,51 +12,9 @@
         </b-navbar-nav>
       </div>
 
-      <button v-b-modal.askCall class="d-none d-lg-block call-button">
-        Заказать звонок
-      </button>
-      <button v-b-modal.askCall class="call-button call-mobile d-lg-none">
-        <font-awesome-icon :icon="['fas', 'phone-alt']"/>
-      </button>
+      <NavForm />
+
     </b-container>
-
-    <b-modal id="askCall" centered title="Обратный звонок" hide-footer>
-      <p class="text-center">
-        Оставьте заявку и наш специалист свяжется с вами
-        в ближайшее время
-      </p>
-      <div class="text-center">
-        <b-form class="ask-call">
-          <b-form-group>
-            <b-form-input
-              id="input-1"
-              class="m-auto"
-              required
-              placeholder="Имя"
-            ></b-form-input>
-          </b-form-group>
-
-          <b-form-group>
-            <b-form-input
-              id="input-2"
-              class="m-auto"
-              required
-              placeholder="Номер телефона"
-            ></b-form-input>
-          </b-form-group>
-          <b-form-group class="checkout">
-            <b-form-checkbox-group>
-              <b-form-checkbox required>
-                Согласие на обработку <span class="span-link" @click="$bvModal.hide('askCall'), $bvModal.show('privacyPolicy')">персональных данных</span>
-              </b-form-checkbox>
-            </b-form-checkbox-group>
-          </b-form-group>
-          <button type="submit" class="call-black-button mt-4">Заказать звонок</button>
-        </b-form>
-      </div>
-    </b-modal>
-
-
 
     <b-modal id="privacyPolicy" scrollable large size="lg" centered title="Политика конфиденциальности" hide-footer>
       <Policy />
@@ -68,8 +26,9 @@
 
 <script>
 import Policy from "./Policy";
+import NavForm from "./NavForm";
 export default {
-  components: {Policy},
+  components: {NavForm, Policy},
   data() {
     return {
       items: [

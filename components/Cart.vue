@@ -64,55 +64,23 @@
 
           <b-row class="align-items-center">
             <b-col :lg="6" class="text-center">
-              <button v-b-modal.askDiscount class="gradient-button">
-                Получить скидку
-              </button>
+
+              <DiscountForm />
+
             </b-col>
             <b-col :lg="6" class="text-center">
-              <a :href="url+get_str" target="_blank" class="btn black-button mt-4 mt-lg-0">
+              <a :href="order_url" target="_blank" class="btn black-button mt-4 mt-lg-0">
                 Оформить заказ
               </a>
+              <!--<button @click.prevent="getOrder" class="btn black-button mt-4 mt-lg-0">
+                Оформить заказ
+              </button>-->
             </b-col>
           </b-row>
 
-          <b-modal id="askDiscount" centered title="Получить скидку" hide-footer>
-            <p class="text-center">
-              Для получения дополнительной скидки<br>
-              оставьте свои контакты и менеджер свяжется с вами
-            </p>
-            <div class="text-center">
-              <b-form class="ask-call">
-                <b-form-group>
-                  <b-form-input
-                    id="input-discount-name"
-                    class="m-auto"
-                    required
-                    placeholder="Имя"
-                  ></b-form-input>
-                </b-form-group>
-
-                <b-form-group>
-                  <b-form-input
-                    id="input-discount-phone"
-                    class="m-auto"
-                    required
-                    placeholder="Номер телефона"
-                  ></b-form-input>
-                </b-form-group>
-                <b-form-group class="checkout">
-                  <b-form-checkbox-group>
-                    <b-form-checkbox required>
-                      Согласие на обработку <span class="span-link" @click="$bvModal.hide('askDiscount'), $bvModal.show('privacyPolicyCart')">персональных данных</span>
-                    </b-form-checkbox>
-                  </b-form-checkbox-group>
-                </b-form-group>
-                <button type="submit" class="call-black-button mt-4">Заказать звонок</button>
-              </b-form>
-            </div>
-          </b-modal>
-
-          <b-modal id="privacyPolicyCart" scrollable large size="lg" centered title="Политика конфиденциальности" hide-footer>
-            <Policy />
+          <b-modal id="privacyPolicyCart" scrollable large size="lg" centered title="Политика конфиденциальности"
+                   hide-footer>
+            <Policy/>
           </b-modal>
 
         </div>
@@ -127,33 +95,16 @@ import round from '../mixins/round'
 import format_price from "../mixins/format_price"
 import ProductsList from '../components/ProductsList.vue'
 import Policy from "./Policy";
+import DiscountForm from "./DiscountForm";
 
 export default {
   components: {
     Policy,
-    ProductsList
+    ProductsList,
+    DiscountForm
   },
   mixins: [round, format_price],
-  data() {
-    return {
-      url: 'https://dev.skat-ups.ru/addtobasket/',
-      get_str: '&product_id[]=555',
-      complect: false,
-      /*getBody: [
-        '&product_id[]=555'
-      ],
-      postBody: [
-        {
-          products: [
-            [555, 2],
-            [444, 1]
-          ],
-          complect: 1
-        }
-      ],*/
-      errors: [] // массив для записи ошибок
-    }
-  },
+
   methods: {
     /*postOrder: function () {
       const str = JSON.stringify(this.postBody);
@@ -167,7 +118,7 @@ export default {
         });
     },
     getOrder: function () {
-      const str = this.getBody
+      const str = JSON.stringify(this.getBody);
       this.$axios.get('https://dev.skat-ups.ru/addtobasket/', str)
         .then((response) => {
           console.log(response);
@@ -184,12 +135,52 @@ export default {
       // https://medium.com/@aneesshameed/event-bus-in-nuxt-7728315e81b6
       $nuxt.$emit('setactive', category)
       $nuxt.$emit('showstartbtn', false)
-    },
+    }
   },
   computed: {
     ...mapGetters({
       getProductsInCart: 'cart/getProductsInCart'
     }),
+    // Получаем адрес корзины с параметрами
+    order_url() {
+      let all_categories = [];
+      for (let i = 0; i < this.categories.length; i++) {
+        if (this.categories[i].published == 1) {
+          all_categories[i] = this.categories[i].id
+        }
+      }
+      let cart_products = []
+      let url_products = [];
+      for (let i = 0; i < this.getProductsInCart.length; i++) {
+        cart_products[i] = this.getProductsInCart[i]['meta'].parent
+        let qty = this.getProductsInCart[i]['qty']
+        if (!qty > 1) {
+          url_products[i] = 'product_id[]=' + this.getProductsInCart[i]['meta'].article
+        } else {
+          for (let x = 0; x < qty; x++) {
+            url_products.push('product_id[]=' + this.getProductsInCart[i]['meta'].article)
+          }
+        }
+      }
+      let skipped_categories = [];
+      for (let i = 0; i < all_categories.length; i++) {
+        if (!cart_products.includes(all_categories[i])) {
+          skipped_categories[i] = all_categories[i]
+        }
+      }
+      skipped_categories = skipped_categories.filter(function (el) {
+        return el != null;
+      })
+      let site_url = 'https://dev.skat-ups.ru/addtobasket/?'
+      let complect = ''
+      if (skipped_categories.length === 0) complect = '&coupon=BF2020'
+      let order_url = site_url + url_products.join('&') + complect
+      //console.log(order_url)
+      return order_url
+    },
+    categories() {
+      return this.$store.getters['categories/categories']
+    },
     getAmount() {
       let amount = 0
       if (this.getProductsInCart && this.getProductsInCart.length > 0) {
@@ -211,14 +202,17 @@ export default {
 .cart-hr {
   border-bottom: 2px solid #000;
 }
+
 .title-block {
   border-bottom: 2px solid #000;
 }
+
 .span-link {
   cursor: pointer;
   color: #2C60B9;
   text-decoration: underline;
 }
+
 .title {
   background: -webkit-linear-gradient(#2762B9, #972EEA);
   -webkit-background-clip: text;
@@ -248,30 +242,6 @@ a.empty-text-start {
 
 a.empty-text-start:hover {
   text-decoration: none;
-}
-
-.gradient-button {
-  background: linear-gradient(270deg, #2762B9 0%, #3056A3 11.87%, #972EEA 81.77%);
-  padding: .8rem 2rem;
-  color: #fff;
-  font-size: 1.2rem;
-  font-weight: 700;
-  border: none;
-  border-radius: 4rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
-a.gradient-button {
-  color: #fff;
-}
-
-a.gradient-button:hover {
-  text-decoration: none;
-}
-
-.gradient-button:hover, .gradient-button:focus {
-  background: #000;
 }
 
 .black-button {
