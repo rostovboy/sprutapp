@@ -76,7 +76,7 @@ export default {
 
       if (this.name && this.phone && this.agree) {
         const modalTimeoutSeconds = 5;
-        const str = 'fields[NAME]=' + this.title + '&fields[COMMENTS]=' + 'Имя: ' + this.name + ', Телефон: ' + this.phone
+        const str = 'fields[SOURCE_ID]=432&fields[NAME]=' + this.title + '&fields[COMMENTS]=' + 'Имя: ' + this.name + ', Телефон: ' + this.phone
         this.$axios.post('https://bast.bitrix24.ru/rest/16/ixdaypqpgatty9gw/crm.lead.add?', str)
           .then((response) => {
             if (response.data['result'] > 0) {
