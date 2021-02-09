@@ -4,7 +4,7 @@
       Получить скидку
     </button>
 
-    <b-modal id="modalResponse" centered title="" hide-footer>
+    <b-modal id="modalResponseCart" centered title="" hide-footer>
       <p class="text-center">
         {{ result }}
       </p>
@@ -27,7 +27,6 @@
         <b-form class="ask-call">
           <b-form-group>
             <b-form-input
-              id="name"
               class="m-auto"
               required
               placeholder="Имя"
@@ -38,7 +37,6 @@
 
           <b-form-group>
             <b-form-input
-              id="phone"
               class="m-auto"
               required
               placeholder="Номер телефона"
@@ -97,9 +95,9 @@ export default {
             if (response.data['result'] > 0) {
               this.result = 'Заявка на получение дополнительной скидки № ' + response.data['result'] + ' успешно создана! Наш специалист свяжется с вами в ближайшее время'
               this.$bvModal.hide('askDiscount')
-              this.$bvModal.show('modalResponse')
+              this.$bvModal.show('modalResponseCart')
               setTimeout(() => {
-                this.$bvModal.hide('modalResponse')
+                this.$bvModal.hide('modalResponseCart')
               }, modalTimeoutSeconds * 1000)
             }
 

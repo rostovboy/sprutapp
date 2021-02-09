@@ -7,7 +7,7 @@
       <font-awesome-icon :icon="['fas', 'phone-alt']"/>
     </button>
 
-    <b-modal id="modalResponse" centered title="" hide-footer>
+    <b-modal id="modalResponseNavbar" centered title="" hide-footer>
       <p class="text-center">
         {{ result }}
       </p>
@@ -30,7 +30,6 @@
         <b-form class="ask-call">
           <b-form-group>
             <b-form-input
-              id="name"
               class="m-auto"
               required
               placeholder="Имя"
@@ -41,7 +40,6 @@
 
           <b-form-group>
             <b-form-input
-              id="phone"
               class="m-auto"
               required
               placeholder="Номер телефона"
@@ -99,9 +97,9 @@ export default {
             if (response.data['result'] > 0) {
               this.result = 'Заявка на обратный звонок № ' + response.data['result'] + ' успешно создана! Наш специалист свяжется с вами в ближайшее время'
               this.$bvModal.hide('askCall')
-              this.$bvModal.show('modalResponse')
+              this.$bvModal.show('modalResponseNavbar')
               setTimeout(() => {
-                this.$bvModal.hide('modalResponse')
+                this.$bvModal.hide('modalResponseNavbar')
               }, modalTimeoutSeconds * 1000)
             }
 
@@ -118,9 +116,9 @@ export default {
             if (response.data['id'] > 0) {
               this.result = 'Заявка на обратный звонок № ' + response.data['id'] + ' успешно создана! Наш специалист свяжется с вами в ближайшее время'
               this.$bvModal.hide('askCall')
-              this.$bvModal.show('modalResponse')
+              this.$bvModal.show('modalResponseNavbar')
               setTimeout(() => {
-                this.$bvModal.hide('modalResponse')
+                this.$bvModal.hide('modalResponseNavbar')
               }, modalTimeoutSeconds * 1000)
             }
           })

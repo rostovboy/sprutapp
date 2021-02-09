@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-modal id="modalResponse" centered title="" hide-footer>
+    <b-modal id="modalResponseContacts" centered title="" hide-footer>
       <p class="text-center">
         {{ result }}
       </p>
@@ -17,7 +17,6 @@
       <b-form class="ask-call">
         <b-form-group>
           <b-form-input
-            id="name"
             required
             placeholder="Имя"
             v-model="name"
@@ -27,7 +26,6 @@
 
         <b-form-group>
           <b-form-input
-            id="phone"
             required
             placeholder="Номер телефона"
             v-model="phone"
@@ -83,9 +81,9 @@ export default {
           .then((response) => {
             if (response.data['result'] > 0) {
               this.result = 'Заявка на обратный звонок № ' + response.data['result'] + ' успешно создана! Наш специалист свяжется с вами в ближайшее время'
-              this.$bvModal.show('modalResponse')
+              this.$bvModal.show('modalResponseContacts')
               setTimeout(() => {
-                this.$bvModal.hide('modalResponse')
+                this.$bvModal.hide('modalResponseContacts')
               }, modalTimeoutSeconds * 1000)
             }
           })
