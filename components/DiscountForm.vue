@@ -88,12 +88,16 @@ export default {
       if (this.name && this.phone && this.agree) {
         const modalTimeoutSeconds = 5;
 
-        const str = 'fields[SOURCE_ID]=432&fields[NAME]=' + this.title + '&fields[COMMENTS]=' + 'Имя: ' + this.name + ', Телефон: ' + this.phone
-        this.$axios.post('https://bast.bitrix24.ru/rest/16/ixdaypqpgatty9gw/crm.lead.add?', str)
+        let postBody = [{
+          'title': this.title,
+          'name': this.name,
+          'phone': this.phone
+        }]
+        const str = JSON.stringify(postBody);
+        this.$axios.post('https://sprut.fract.ru/api/queries', str)
           .then((response) => {
-            //console.log(response);
-            if (response.data['result'] > 0) {
-              this.result = 'Заявка на получение дополнительной скидки № ' + response.data['result'] + ' успешно создана! Наш специалист свяжется с вами в ближайшее время'
+            if (response.data['message'] > 0) {
+              this.result = 'Заявка на получение дополнительной скидки № ' + response.data['message'] + ' успешно создана! Наш специалист свяжется с вами в ближайшее время'
               this.$bvModal.hide('askDiscount')
               this.$bvModal.show('modalResponseCart')
               setTimeout(() => {
