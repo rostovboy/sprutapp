@@ -48,7 +48,8 @@
           <b-form-group class="checkout">
             <b-form-checkbox-group>
               <b-form-checkbox required v-model="agree" novalidate="true">
-                Согласие на обработку <span class="span-link" @click="$bvModal.hide('askCall'), $bvModal.show('privacyPolicy')">персональных данных</span>
+                Согласие на обработку <span class="span-link"
+                                            @click="$bvModal.hide('askCall'), $bvModal.show('privacyPolicy')">персональных данных</span>
               </b-form-checkbox>
             </b-form-checkbox-group>
           </b-form-group>
@@ -88,13 +89,19 @@ export default {
       if (this.name && this.phone && this.agree) {
         const modalTimeoutSeconds = 5;
 
-        let postBody = [{
-          'title': this.title,
-          'name': this.name,
-          'phone': this.phone
-        }]
+        // Объект
+        let postBody = {
+          title: this.title,
+          name: this.name,
+          phone: this.phone
+        }
         const str = JSON.stringify(postBody);
-        this.$axios.post('https://sprut.fract.ru/api/queries', str)
+        console.log(str);
+        this.$axios.post('https://sprut.fract.ru/api/queries', str, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
           .then((response) => {
             if (response.data['message'] > 0) {
               this.result = 'Заявка на получение дополнительной скидки № ' + response.data['message'] + ' успешно создана! Наш специалист свяжется с вами в ближайшее время'
@@ -103,8 +110,14 @@ export default {
               setTimeout(() => {
                 this.$bvModal.hide('modalResponseCart')
               }, modalTimeoutSeconds * 1000)
+            } else {
+              this.result = 'Ошибка'
+              this.$bvModal.hide('askDiscount')
+              this.$bvModal.show('modalResponseCart')
+              setTimeout(() => {
+                this.$bvModal.hide('modalResponseCart')
+              }, modalTimeoutSeconds * 1000)
             }
-
           })
           .catch((error) => {
             this.result = error
@@ -151,6 +164,7 @@ a.gradient-button:hover {
 .notvalid {
   //border: 1px solid red;
 }
+
 .valid {
   border: 1px solid #00b800;
 }

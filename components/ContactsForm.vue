@@ -77,16 +77,29 @@ export default {
       if (this.name && this.phone && this.agree) {
         const modalTimeoutSeconds = 5;
 
-        let postBody = [{
-          'title': this.title,
-          'name': this.name,
-          'phone': this.phone
-        }]
+        // Объект
+        let postBody = {
+          title: this.title,
+          name: this.name,
+          phone: this.phone
+        }
         const str = JSON.stringify(postBody);
-        this.$axios.post('https://sprut.fract.ru/api/queries', str)
+        console.log(str);
+        this.$axios.post('https://sprut.fract.ru/api/queries', str, {
+          headers: {
+            // Overwrite Axios's automatically set Content-Type
+            'Content-Type': 'application/json'
+          }
+        })
           .then((response) => {
             if (response.data['message'] > 0) {
               this.result = 'Заявка на обратный звонок № ' + response.data['message'] + ' успешно создана! Наш специалист свяжется с вами в ближайшее время'
+              this.$bvModal.show('modalResponseContacts')
+              setTimeout(() => {
+                this.$bvModal.hide('modalResponseContacts')
+              }, modalTimeoutSeconds * 1000)
+            } else {
+              this.result = 'Ошибка'
               this.$bvModal.show('modalResponseContacts')
               setTimeout(() => {
                 this.$bvModal.hide('modalResponseContacts')
