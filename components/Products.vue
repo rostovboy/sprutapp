@@ -85,7 +85,7 @@
                     </div>
                   </b-col>
                   <b-col cols="6" :lg="6">
-                    <span class="plus-button" @click.prevent="onQuantityPlusHandler()">+</span>
+                    <span class="minus-button" @click.prevent="onQuantityMinusHandler()">-</span>
                     <input
                       :value="qty"
                       type="number"
@@ -93,7 +93,7 @@
                       :max="1000"
                       class="qty-input"
                     />
-                    <span class="minus-button" @click.prevent="onQuantityMinusHandler()">-</span>
+                    <span class="plus-button" @click.prevent="onQuantityPlusHandler()">+</span>
                   </b-col>
                 </b-row>
               </div>
@@ -106,7 +106,7 @@
                     </div>
                   </b-col>
                   <b-col cols="6" :lg="6">
-                    <span class="plus-button" @click.prevent="onQuantityPlusHandler()">+</span>
+                    <span class="minus-button" @click.prevent="onQuantityMinusHandler()">-</span>
                     <input
                       :value="qty"
                       type="number"
@@ -114,7 +114,7 @@
                       :max="1000"
                       class="qty-input"
                     />
-                    <span class="minus-button" @click.prevent="onQuantityMinusHandler()">-</span>
+                    <span class="plus-button" @click.prevent="onQuantityPlusHandler()">+</span>
                   </b-col>
                 </b-row>
               </div>
@@ -185,15 +185,15 @@ export default {
 }
 
 .minus-button {
-  font-size: 2rem;
+  font-size: 2.5rem;
   cursor: pointer;
   vertical-align: sub;
 }
 
 input.qty-input {
   border-radius: 1.5rem;
-  padding-left: 1rem;
-  max-width: 50px;
+  padding-left: .5rem;
+  max-width: 30px;
   border: 1px solid #000;
 }
 
@@ -314,6 +314,18 @@ input.qty-input {
   border: 2px solid #000;
   border-radius: 50%;
   display: inline-block;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
 
 @media (max-width: 576px) {

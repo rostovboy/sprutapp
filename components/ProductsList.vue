@@ -15,7 +15,7 @@
           {{ product.productId.price }}
         </div>-->
         <div class="col-sm-3 text-center d-none d-sm-block">
-          <span class="plus-button" @click.prevent="onQuantityPlusHandler(product.qty, product)">+</span>
+          <span class="minus-button" @click.prevent="onQuantityMinusHandler(product.qty, product)">-</span>
           <input
             :value="product.qty"
             type="number"
@@ -24,7 +24,7 @@
             class="qty-input"
             @input.prevent="onQuantityChangeHandler($event, product)"
           />
-          <span class="minus-button" @click.prevent="onQuantityMinusHandler(product.qty, product)">-</span>
+          <span class="plus-button" @click.prevent="onQuantityPlusHandler(product.qty, product)">+</span>
         </div>
           <div v-if="$device.isMobile" class="col-4 col-sm-3">
             {{ (product.meta.price * product.qty) | round }} <span class="ruble"><font-awesome-icon :icon="['fas', 'ruble-sign']"/></span>
@@ -138,11 +138,23 @@ export default {
 input.qty-input {
   border: 1px solid #000;
   border-radius: 1.5rem;
-  max-width: 55px;
+  max-width: 30px;
   max-height: 30px;
   padding-left: .5rem;
   margin: 0 .1rem;
   background: #f7f7f7;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
 
 @media (max-width: 576px) {
@@ -201,9 +213,9 @@ input.qty-input {
   }
   input.qty-input {
     border-radius: 1.5rem;
-    max-width: 75px;
+    max-width: 35px;
     max-height: 35px;
-    padding-left: 1rem;
+    padding-left: .5rem;
     margin: 0 .4rem;
   }
 }
@@ -214,9 +226,9 @@ input.qty-input {
   }
   input.qty-input {
     border-radius: 1.5rem;
-    max-width: 75px;
+    max-width: 35px;
     max-height: 35px;
-    padding-left: 1rem;
+    padding-left: .5rem;
     margin: 0 .4rem;
   }
 }
